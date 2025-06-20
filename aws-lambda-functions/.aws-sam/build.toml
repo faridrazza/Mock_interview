@@ -63,4 +63,13 @@ manifest_hash = "67730eca6624359fb7336b096df22e93"
 packagetype = "Zip"
 functions = ["SpeechProcessorFunction"]
 
+[function_build_definitions.68fe2642-b9f5-4722-a55c-e77576815b1f]
+codeuri = "C:\\Users\\moham\\avatar-interview-boost\\aws-lambda-functions\\src\\enhance-resume"
+runtime = "nodejs18.x"
+architecture = "x86_64"
+handler = "index.handler"
+manifest_hash = "aa37a1725f74aecec17c799b26d241b5"
+packagetype = "Zip"
+functions = ["EnhanceResumeFunction"]
+
 [layer_build_definitions]

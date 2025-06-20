@@ -240,17 +240,39 @@ const ResumeEditor = () => {
         return;
       }
       
-      // Call the 'enhance-resume' function but in a special "ats-improvement" mode
-      const { data, error } = await supabase.functions.invoke('enhance-resume', {
-        body: {
+      // Try AWS Lambda first, fallback to Supabase if it fails
+      let data;
+      let error;
+      
+      try {
+        // Attempt to use AWS Lambda
+        const { lambdaApi } = await import('@/config/aws-lambda');
+        data = await lambdaApi.enhanceResume({
           resumeContent: resumeContent,
           sectionType: 'all', // Special mode to enhance all sections
           jobDescription: resume.job_description || '',
           targetRole: resume.target_role || '',
           improvement_suggestions: improvement_suggestions || [],
           missing_keywords: missing_keywords || []
-        }
-      });
+        });
+      } catch (lambdaError: any) {
+        console.warn('AWS Lambda enhance-resume failed, falling back to Supabase:', lambdaError);
+        
+        // Fallback to Supabase Edge Function
+        const response = await supabase.functions.invoke('enhance-resume', {
+          body: {
+            resumeContent: resumeContent,
+            sectionType: 'all', // Special mode to enhance all sections
+            jobDescription: resume.job_description || '',
+            targetRole: resume.target_role || '',
+            improvement_suggestions: improvement_suggestions || [],
+            missing_keywords: missing_keywords || []
+          }
+        });
+        
+        data = response.data;
+        error = response.error;
+      }
       
       if (error) {
         throw new Error(error.message || 'Failed to apply ATS suggestions');

@@ -1,0 +1,15 @@
+{
+  "name": "enhance-resume-lambda",
+  "version": "1.0.0",
+  "description": "AWS Lambda function for enhancing resume content using OpenAI",
+  "main": "index.js",
+  "dependencies": {
+    "openai": "^4.20.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["aws", "lambda", "resume", "enhancement", "openai"],
+  "author": "",
+  "license": "ISC"
+} 

@@ -10,6 +10,7 @@ export interface LambdaConfig {
     speechToText: string;
     advancedInterview: string;
     generateCompanyQuestions: string;
+    enhanceResume: string;
   };
   timeout: number;
   retryAttempts: number;
@@ -48,6 +49,7 @@ export const lambdaConfig: LambdaConfig = {
     speechToText: '/speech-to-text',
     advancedInterview: '/advanced-interview-ai',
     generateCompanyQuestions: '/generate-company-questions',
+    enhanceResume: '/enhance-resume',
   },
   timeout: 60000, // 60 seconds (increased for Transcribe processing)
   retryAttempts: 2,
@@ -131,6 +133,20 @@ export class LambdaApiClient {
     companyName: string;
   }) {
     return this.makeRequest(this.config.endpoints.generateCompanyQuestions, payload);
+  }
+
+  /**
+   * Enhance resume content using AI
+   */
+  async enhanceResume(payload: {
+    resumeContent: any;
+    sectionType: string;
+    jobDescription?: string;
+    targetRole?: string;
+    improvement_suggestions?: string[];
+    missing_keywords?: string[];
+  }) {
+    return this.makeRequest(this.config.endpoints.enhanceResume, payload);
   }
 
 

@@ -100,14 +100,35 @@ const EnhanceWithAI: React.FC<EnhanceWithAIProps> = ({
         targetRole: targetRole || "Not provided"
       });
       
-      const { data, error } = await supabase.functions.invoke('enhance-resume', {
-        body: {
+      // Try AWS Lambda first, fallback to Supabase if it fails
+      let data;
+      let error;
+      
+      try {
+        // Attempt to use AWS Lambda
+        const { lambdaApi } = await import('@/config/aws-lambda');
+        data = await lambdaApi.enhanceResume({
           resumeContent: formattedData,
           sectionType,
           jobDescription,
           targetRole
-        }
-      });
+        });
+      } catch (lambdaError: any) {
+        console.warn('AWS Lambda enhance-resume failed, falling back to Supabase:', lambdaError);
+        
+        // Fallback to Supabase Edge Function
+        const response = await supabase.functions.invoke('enhance-resume', {
+          body: {
+            resumeContent: formattedData,
+            sectionType,
+            jobDescription,
+            targetRole
+          }
+        });
+        
+        data = response.data;
+        error = response.error;
+      }
 
       if (error) {
         console.error("Error from enhance-resume function:", error);

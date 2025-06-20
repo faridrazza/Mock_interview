@@ -187,6 +187,25 @@ Resources:
             Method: post
             RestApiId: !Ref MockInterviewAPI
 
+  # Enhance Resume Function
+  EnhanceResumeFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src/enhance-resume/
+      Handler: index.handler
+      Description: Enhance resume content using AI for better ATS compatibility and improved writing
+      Timeout: 60
+      Environment:
+        Variables:
+          OPENAI_API_KEY: !Ref OpenAIApiKey
+      Events:
+        EnhanceResume:
+          Type: Api
+          Properties:
+            Path: /enhance-resume
+            Method: post
+            RestApiId: !Ref MockInterviewAPI
+
 
 
 
