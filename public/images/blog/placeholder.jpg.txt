@@ -1,0 +1,6 @@
+This is a placeholder for a JPG image file. 
+You should replace this text file with an actual 16:9 aspect ratio JPG image named 'placeholder.jpg'.
+
+The placeholder image will be used for blog posts that don't have a specific cover image.
+
+Recommended size: 1200x675 pixels. 

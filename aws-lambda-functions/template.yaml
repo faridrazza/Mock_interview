@@ -1,0 +1,287 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  MockInterview4u - AWS Lambda Hackathon Submission
+  AI-powered interview preparation and resume optimization platform
+
+# Global parameters for all functions
+Globals:
+  Function:
+    Timeout: 30
+    Runtime: nodejs18.x
+    Environment:
+      Variables:
+        CORS_ORIGINS: !Ref CorsOrigins
+        NODE_ENV: production
+  Api:
+    Cors:
+      AllowMethods: "'GET,POST,OPTIONS'"
+      AllowHeaders: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+      AllowOrigin: "'*'"
+
+Parameters:
+  CorsOrigins:
+    Type: String
+    Default: "*"
+    Description: Allowed CORS origins
+  
+  OpenAIApiKey:
+    Type: String
+    NoEcho: true
+    Description: OpenAI API Key for AI functionality
+  
+  
+
+Resources:
+  # Standard AI Interview Question Generator
+  GenerateInterviewQuestionFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src/generate-interview-question/
+      Handler: index.handler
+      Description: Standard AI interview question generation for basic interview flows
+      Environment:
+        Variables:
+          OPENAI_API_KEY: !Ref OpenAIApiKey
+      Events:
+        GenerateQuestion:
+          Type: Api
+          Properties:
+            Path: /generate-interview-question
+            Method: post
+            RestApiId: !Ref MockInterviewAPI
+
+  # Standard AI Interview Feedback Generator
+  GenerateInterviewFeedbackFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src/generate-interview-feedback/
+      Handler: index.handler
+      Description: Generate comprehensive interview feedback and scoring
+      Timeout: 60
+      Environment:
+        Variables:
+          OPENAI_API_KEY: !Ref OpenAIApiKey
+      Events:
+        GenerateFeedback:
+          Type: Api
+          Properties:
+            Path: /generate-interview-feedback
+            Method: post
+            RestApiId: !Ref MockInterviewAPI
+
+  # Text-to-Speech using Amazon Polly
+  TextToSpeechFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src/text-to-speech/
+      Handler: index.handler
+      Description: Convert interview responses to speech using Amazon Polly
+      Timeout: 30
+      Policies:
+        - Statement:
+            - Effect: Allow
+              Action:
+                - polly:SynthesizeSpeech
+                - polly:DescribeVoices
+              Resource: "*"
+      Events:
+        TextToSpeech:
+          Type: Api
+          Properties:
+            Path: /text-to-speech
+            Method: post
+            RestApiId: !Ref MockInterviewAPI
+
+  # Core AI Interview Function (Advanced Interviews)
+  InterviewAIFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src/interview-ai/
+      Handler: index.handler
+      Description: Advanced AI-powered interview question generation and conversation
+      Environment:
+        Variables:
+          OPENAI_API_KEY: !Ref OpenAIApiKey
+      Events:
+        InterviewAI:
+          Type: Api
+          Properties:
+            Path: /interview-ai
+            Method: post
+            RestApiId: !Ref MockInterviewAPI
+
+  # ATS Resume Analysis Function (TODO: Implement later)
+  # ATSAnalyzerFunction:
+  #   Type: AWS::Serverless::Function
+  #   Properties:
+  #     CodeUri: src/ats-analyzer/
+  #     Handler: index.handler
+  #     Description: Automated resume analysis for ATS compatibility scoring
+  #     Timeout: 60
+  #     Environment:
+  #       Variables:
+  #         OPENAI_API_KEY: !Ref OpenAIApiKey
+  #     Events:
+  #       ATSAnalyzer:
+  #         Type: Api
+  #         Properties:
+  #           Path: /ats-analysis
+  #           Method: post
+  #           RestApiId: !Ref MockInterviewAPI
+
+  # Speech Processing Function
+  SpeechProcessorFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src/speech-processor/
+      Handler: index.handler
+      Description: Speech-to-text processing for interview responses using OpenAI Whisper (v3.0 - OpenAI Integration)
+      Timeout: 60
+      Environment:
+        Variables:
+          OPENAI_API_KEY: !Ref OpenAIApiKey
+      Events:
+        SpeechProcessor:
+          Type: Api
+          Properties:
+            Path: /speech-to-text
+            Method: post
+            RestApiId: !Ref MockInterviewAPI
+
+  # Advanced Interview AI Function
+  AdvancedInterviewAIFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src/advanced-interview-ai/
+      Handler: index.handler
+      Description: Advanced company-specific interview conversation engine
+      Timeout: 45
+      Environment:
+        Variables:
+          OPENAI_API_KEY: !Ref OpenAIApiKey
+      Events:
+        AdvancedInterviewAI:
+          Type: Api
+          Properties:
+            Path: /advanced-interview-ai
+            Method: post
+            RestApiId: !Ref MockInterviewAPI
+
+  # Generate Company Questions Function
+  GenerateCompanyQuestionsFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src/generate-company-questions/
+      Handler: index.handler
+      Description: Generate company-specific interview questions and preparation suggestions
+      Timeout: 60
+      Environment:
+        Variables:
+          OPENAI_API_KEY: !Ref OpenAIApiKey
+      Events:
+        GenerateCompanyQuestions:
+          Type: Api
+          Properties:
+            Path: /generate-company-questions
+            Method: post
+            RestApiId: !Ref MockInterviewAPI
+
+
+
+  # Analytics Function (EventBridge Trigger) - TODO: Implement later
+  # AnalyticsFunction:
+  #   Type: AWS::Serverless::Function
+  #   Properties:
+  #     CodeUri: src/analytics/
+  #     Handler: index.handler
+  #     Description: Process usage analytics and generate insights
+  #     Events:
+  #       ScheduledAnalytics:
+  #         Type: Schedule
+  #         Properties:
+  #           Schedule: rate(1 hour)
+  #           Description: Hourly analytics processing
+
+  # API Gateway
+  MockInterviewAPI:
+    Type: AWS::Serverless::Api
+    Properties:
+      Name: MockInterview4u-API
+      StageName: prod
+      Description: API Gateway for MockInterview4u Lambda functions
+      Cors:
+        AllowMethods: "'GET,POST,OPTIONS'"
+        AllowHeaders: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+        AllowOrigin: "'*'"
+
+  # DynamoDB Table for Analytics & Caching
+  AnalyticsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: MockInterview4u-Analytics
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: id
+          AttributeType: S
+        - AttributeName: timestamp
+          AttributeType: N
+      KeySchema:
+        - AttributeName: id
+          KeyType: HASH
+        - AttributeName: timestamp
+          KeyType: RANGE
+
+  # S3 Bucket for File Storage
+  FileStorageBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub "mockinterview4u-files-${AWS::AccountId}"
+      CorsConfiguration:
+        CorsRules:
+          - AllowedHeaders: ['*']
+            AllowedMethods: [GET, PUT, POST, DELETE]
+            AllowedOrigins: ['*']
+            MaxAge: 3000
+
+  # S3 Bucket for Temporary Audio Storage (No longer needed - using OpenAI Whisper directly)
+  # TempAudioBucket:
+  #   Type: AWS::S3::Bucket
+  #   Properties:
+  #     BucketName: !Sub "mockinterview4u-temp-audio-${AWS::AccountId}-${AWS::Region}"
+  #     LifecycleConfiguration:
+  #       Rules:
+  #         - Id: DeleteTempFiles
+  #           Status: Enabled
+  #           ExpirationInDays: 1
+  #     CorsConfiguration:
+  #       CorsRules:
+  #         - AllowedHeaders: ['*']
+  #           AllowedMethods: [GET, PUT, POST, DELETE]
+  #           AllowedOrigins: ['*']
+  #           MaxAge: 3000
+  #     PublicAccessBlockConfiguration:
+  #       BlockPublicAcls: true
+  #       BlockPublicPolicy: true
+  #       IgnorePublicAcls: true
+  #       RestrictPublicBuckets: true
+
+# Outputs for the frontend to use
+Outputs:
+  MockInterviewAPI:
+    Description: "API Gateway endpoint URL for MockInterview4u"
+    Value: !Sub "https://${MockInterviewAPI}.execute-api.${AWS::Region}.amazonaws.com/prod/"
+    Export:
+      Name: !Sub "${AWS::StackName}-APIEndpoint"
+
+  InterviewAIFunction:
+    Description: "Interview AI Lambda Function ARN"
+    Value: !GetAtt InterviewAIFunction.Arn
+    Export:
+      Name: !Sub "${AWS::StackName}-InterviewAIFunctionArn"
+
+  # ATSAnalyzerFunction:
+  #   Description: "ATS Analyzer Lambda Function ARN"
+  #   Value: !GetAtt ATSAnalyzerFunction.Arn
+  #   Export:
+  #     Name: !Sub "${AWS::StackName}-ATSAnalyzerFunctionArn" 

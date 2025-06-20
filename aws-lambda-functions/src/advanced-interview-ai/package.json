@@ -1,0 +1,28 @@
+{
+  "name": "advanced-interview-ai",
+  "version": "1.0.0",
+  "description": "AWS Lambda function for advanced company-specific interview conversations",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "node-fetch": "^2.6.7"
+  },
+  "devDependencies": {
+    "@types/node": "^18.0.0"
+  },
+  "keywords": [
+    "aws-lambda",
+    "interview",
+    "ai",
+    "advanced-interview",
+    "openai",
+    "company-specific"
+  ],
+  "author": "MockInterview4u Team",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  }
+} 

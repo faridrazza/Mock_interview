@@ -1,0 +1,22 @@
+{
+  "name": "generate-interview-feedback",
+  "version": "1.0.0",
+  "description": "Lambda function for generating comprehensive interview feedback and scoring",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@types/node": "^18.0.0"
+  },
+  "keywords": [
+    "aws-lambda",
+    "interview",
+    "feedback",
+    "openai",
+    "ai-analysis"
+  ],
+  "author": "MockInterview4u Team",
+  "license": "MIT"
+} 

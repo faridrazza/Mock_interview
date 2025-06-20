@@ -1,0 +1,13 @@
+{
+  "name": "speech-processor",
+  "version": "1.0.0",
+  "description": "AWS Lambda function for speech-to-text processing using OpenAI Whisper",
+  "main": "index.js",
+  "dependencies": {
+    "node-fetch": "^2.6.7",
+    "form-data": "^4.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+} 

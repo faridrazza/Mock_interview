@@ -1,0 +1,22 @@
+version = 0.1
+
+[default]
+[default.global]
+[default.global.parameters]
+stack_name = "Mockinterview4u"
+region = "us-east-1"
+
+[default.build]
+[default.build.parameters]
+cached = true
+parallel = true
+
+[default.deploy]
+[default.deploy.parameters]
+capabilities = "CAPABILITY_IAM"
+confirm_changeset = false
+resolve_s3 = true
+parameter_overrides = [
+    "CorsOrigins=http://localhost:5173,http://localhost:3000,http://localhost:8080,http://localhost:8081",
+    "OpenAIApiKey=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"
+] 

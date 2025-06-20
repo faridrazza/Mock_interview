@@ -1,0 +1,10 @@
+{
+  "name": "interview-ai",
+  "version": "1.0.0",
+  "description": "AWS Lambda function for core AI interview question generation and conversation",
+  "main": "index.js",
+  "dependencies": {},
+  "engines": {
+    "node": ">=18.0.0"
+  }
+} 

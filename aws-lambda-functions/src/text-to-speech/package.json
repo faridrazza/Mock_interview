@@ -1,0 +1,27 @@
+{
+  "name": "text-to-speech",
+  "version": "1.0.0",
+  "description": "AWS Lambda function for text-to-speech using Amazon Polly",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.1400.0"
+  },
+  "devDependencies": {
+    "@types/node": "^18.0.0"
+  },
+  "keywords": [
+    "aws-lambda",
+    "text-to-speech",
+    "polly",
+    "speech-synthesis",
+    "lip-sync"
+  ],
+  "author": "MockInterview4u Team",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  }
+} 

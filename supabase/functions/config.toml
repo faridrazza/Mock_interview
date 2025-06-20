@@ -1,0 +1,19 @@
+
+project_id = "lfpmxqcqygujcftysbtu"
+[advanced-interview-ai]
+[cancel-subscription]
+[check-expired-subscriptions]
+[create-paypal-subscription]
+[create-resume]
+[generate-company-questions]
+[generate-interview-feedback]
+[generate-interview-question]
+[get-client-config]
+[get-paypal-plan-id]
+[get-plan-type]
+[init-cron]
+[paypal-webhook]
+[save-interview-session]
+[speech-to-text]
+[text-to-speech]
+

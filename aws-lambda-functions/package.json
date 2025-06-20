@@ -1,0 +1,48 @@
+{
+  "name": "mockinterview4u-lambda-functions",
+  "version": "1.0.0",
+  "description": "AWS Lambda functions for MockInterview4u - AWS Lambda Hackathon submission",
+  "main": "index.js",
+  "scripts": {
+    "build": "npm run build:all",
+    "build:all": "npm run build:question && npm run build:feedback && npm run build:speech && npm run build:interview && npm run build:advanced && npm run build:company-questions",
+    "build:question": "cd src/generate-interview-question && npm install",
+    "build:feedback": "cd src/generate-interview-feedback && npm install", 
+    "build:speech": "cd src/text-to-speech && npm install",
+    "build:interview": "cd src/interview-ai && npm install",
+    "build:advanced": "cd src/advanced-interview-ai && npm install",
+    "build:company-questions": "cd src/generate-company-questions && npm install",
+    "deploy": "sam build && sam deploy --guided",
+    "deploy:prod": "sam build && sam deploy --config-env production",
+    "local": "sam local start-api",
+    "test": "npm run test:all",
+    "test:all": "npm run test:question && npm run test:feedback && npm run test:speech",
+    "test:question": "cd src/generate-interview-question && npm test",
+    "test:feedback": "cd src/generate-interview-feedback && npm test",
+    "test:speech": "cd src/text-to-speech && npm test",
+    "logs": "sam logs -n GenerateInterviewQuestionFunction --stack-name mockinterview4u --tail",
+    "validate": "sam validate"
+  },
+  "keywords": [
+    "aws",
+    "lambda",
+    "hackathon",
+    "interview",
+    "ai",
+    "serverless",
+    "mock-interview",
+    "openai",
+    "polly"
+  ],
+  "author": "MockInterview4u Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-username/mockinterview4u"
+  },
+  "devDependencies": {
+    "@aws-sdk/client-lambda": "^3.0.0",
+    "@aws-sdk/client-api-gateway": "^3.0.0",
+    "aws-sam-cli": "^1.0.0"
+  }
+} 
