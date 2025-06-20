@@ -189,6 +189,8 @@ Resources:
 
 
 
+
+
   # Analytics Function (EventBridge Trigger) - TODO: Implement later
   # AnalyticsFunction:
   #   Type: AWS::Serverless::Function

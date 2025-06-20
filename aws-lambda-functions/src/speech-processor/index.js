@@ -52,11 +52,11 @@ function processBase64Chunks(base64String, chunkSize = 32768) {
     
     while (position < cleanBase64.length) {
       const chunk = cleanBase64.slice(position, position + chunkSize);
-      const binaryChunk = Buffer.from(chunk, 'base64');
-      chunks.push(binaryChunk);
+        const binaryChunk = Buffer.from(chunk, 'base64');
+        chunks.push(binaryChunk);
       position += chunkSize;
     }
-    
+
     // Combine all chunks into a single buffer
     const totalLength = chunks.reduce((acc, chunk) => acc + chunk.length, 0);
     const result = Buffer.alloc(totalLength);
@@ -124,7 +124,7 @@ async function transcribeWithWhisper(audioBuffer) {
         throw new Error('Authentication error. Please try again.');
       } else {
         throw new Error(`OpenAI API error: ${errorText}`);
-      }
+}
     }
     
     const result = await response.json();
@@ -144,7 +144,7 @@ async function transcribeWithWhisper(audioBuffer) {
 
 exports.handler = async (event) => {
   console.log('OpenAI Whisper speech-to-text request received');
-  
+
   // Handle CORS preflight
   if (event.httpMethod === 'OPTIONS') {
     return {
@@ -225,33 +225,33 @@ exports.handler = async (event) => {
         })
       };
     }
-    
+
     if (audioBuffer.length > 25 * 1024 * 1024) { // 25MB limit for OpenAI
-      return {
-        statusCode: 400,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-        body: JSON.stringify({
+        return {
+          statusCode: 400,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          body: JSON.stringify({
           error: 'Audio recording is too large. Please record a shorter message (max 25MB).',
           provider: 'openai-whisper'
-        })
-      };
-    }
-    
+          })
+        };
+      }
+      
     // Transcribe with OpenAI Whisper
     console.log('Starting OpenAI Whisper transcription...');
     const transcribedText = await transcribeWithWhisper(audioBuffer);
-    
-    console.log(`Transcription completed: "${transcribedText}"`);
+      
+      console.log(`Transcription completed: "${transcribedText}"`);
 
-    return {
-      statusCode: 200,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ 
-        text: transcribedText,
+      return {
+        statusCode: 200,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+          text: transcribedText,
         provider: 'openai-whisper',
         timestamp: new Date().toISOString()
-      })
-    };
+        })
+      };
 
   } catch (error) {
     console.error('Error in OpenAI Whisper speech-to-text:', error);

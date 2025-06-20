@@ -91,13 +91,16 @@ const PublicResumeUploader: React.FC<PublicResumeUploaderProps> = ({
         formData.append('jobDescription', jobDescription.trim());
       }
       
-      // Call the Supabase Edge Function to parse the resume
-      const { data, error } = await supabase.functions.invoke('parse-resume', {
+            // Use Supabase Edge Function for resume parsing
+      const response = await supabase.functions.invoke('parse-resume', {
         body: formData,
         headers: {
           'Accept': 'application/json',
         },
       });
+      
+      const data = response.data;
+      const error = response.error;
       
       if (error) {
         throw new Error(error.message || 'Failed to parse resume');

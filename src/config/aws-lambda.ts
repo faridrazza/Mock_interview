@@ -28,7 +28,7 @@ const isHackathonDemo = import.meta.env.VITE_HACKATHON_MODE === 'true';
 
 // Lambda base URL (will be updated after deployment)
 const LAMBDA_BASE_URL = import.meta.env.VITE_LAMBDA_BASE_URL || 
-  'https://your-api-id.execute-api.us-east-1.amazonaws.com/prod';
+  'https://apb59k8zqg.execute-api.us-east-1.amazonaws.com/prod';
 
 // Fallback to Supabase in development unless hackathon mode is enabled
 const USE_LAMBDA = isHackathonDemo || import.meta.env.VITE_USE_LAMBDA === 'true';
@@ -133,6 +133,8 @@ export class LambdaApiClient {
     return this.makeRequest(this.config.endpoints.generateCompanyQuestions, payload);
   }
 
+
+
   /**
    * Make HTTP request to Lambda function with error handling and retries
    */
@@ -165,6 +167,38 @@ export class LambdaApiClient {
       }
       
       throw new Error(`Lambda request failed after ${this.config.retryAttempts} attempts: ${error.message}`);
+    }
+  }
+
+  /**
+   * Make HTTP request with FormData to Lambda function with error handling and retries
+   */
+  private async makeRequestWithFormData(endpoint: string, formData: FormData, attempt: number = 1): Promise<any> {
+    const url = `${this.config.baseUrl}${endpoint}`;
+    
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        body: formData,
+        signal: AbortSignal.timeout(this.config.timeout),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Lambda request failed: ${response.status} ${response.statusText}`);
+      }
+
+      return await response.json();
+    } catch (error) {
+      console.error(`Lambda FormData request error (attempt ${attempt}):`, error);
+      
+      // Retry logic
+      if (attempt < this.config.retryAttempts) {
+        console.log(`Retrying Lambda FormData request... (${attempt + 1}/${this.config.retryAttempts})`);
+        await this.delay(1000 * attempt); // Exponential backoff
+        return this.makeRequestWithFormData(endpoint, formData, attempt + 1);
+      }
+      
+      throw new Error(`Lambda FormData request failed after ${this.config.retryAttempts} attempts: ${error.message}`);
     }
   }
 
