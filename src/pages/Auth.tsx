@@ -72,14 +72,14 @@ const Auth = () => {
           const { lambdaApi } = await import('@/config/aws-lambda');
           
           const data = await lambdaApi.createResume({
-            title: resumeData.content.contactInfo.name 
-              ? `${resumeData.content.contactInfo.name}'s Resume` 
-              : 'My Resume',
-            content: resumeData.content,
-            originalText: resumeData.originalText,
-            jobDescription: resumeData.jobDescription,
-            selectedTemplate: resumeData.selectedTemplate || 'standard',
-            atsScore: resumeData.atsScore // Explicitly include the ATS score
+              title: resumeData.content.contactInfo.name 
+                ? `${resumeData.content.contactInfo.name}'s Resume` 
+                : 'My Resume',
+              content: resumeData.content,
+              originalText: resumeData.originalText,
+              jobDescription: resumeData.jobDescription,
+              selectedTemplate: resumeData.selectedTemplate || 'standard',
+              atsScore: resumeData.atsScore // Explicitly include the ATS score
           }, accessToken);
           
           if (!data) {

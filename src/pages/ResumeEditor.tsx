@@ -154,12 +154,12 @@ const ResumeEditor = () => {
       const { lambdaApi } = await import('@/config/aws-lambda');
       
       const data = await lambdaApi.atsAnalysis({
-        resumeContent,
-        jobDescription: resume.job_description || '',
-        resumeId: id, // Pass resume ID for caching
-        forceReAnalysis, // Pass force flag
-        templateId: resume.template_id, // Pass template for template-aware analysis
-        isPublicUpload: false // This is not a public upload
+          resumeContent,
+          jobDescription: resume.job_description || '',
+          resumeId: id, // Pass resume ID for caching
+          forceReAnalysis, // Pass force flag
+          templateId: resume.template_id, // Pass template for template-aware analysis
+          isPublicUpload: false // This is not a public upload
       });
       
       if (!data || typeof data.score === 'undefined') {
@@ -241,12 +241,12 @@ const ResumeEditor = () => {
       // Use AWS Lambda enhance-resume function
       const { lambdaApi } = await import('@/config/aws-lambda');
       const data = await lambdaApi.enhanceResume({
-        resumeContent: resumeContent,
-        sectionType: 'all', // Special mode to enhance all sections
-        jobDescription: resume.job_description || '',
-        targetRole: resume.target_role || '',
-        improvement_suggestions: improvement_suggestions || [],
-        missing_keywords: missing_keywords || []
+          resumeContent: resumeContent,
+          sectionType: 'all', // Special mode to enhance all sections
+          jobDescription: resume.job_description || '',
+          targetRole: resume.target_role || '',
+          improvement_suggestions: improvement_suggestions || [],
+          missing_keywords: missing_keywords || []
       });
       
       if (!data || !data.enhanced) {

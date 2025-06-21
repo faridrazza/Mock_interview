@@ -43,25 +43,25 @@ const analyzeResumeATS = async (resumeContent: ResumeContent, jobDescription?: s
       forceReAnalysis: true, // Always analyze for public uploads
       templateId: 'raw', // Mark as raw/original content
       isPublicUpload: true // This is a public upload - baseline score
-    });
-    
-    if (!data || typeof data.score === 'undefined') {
-      throw new Error('No analysis results returned');
-    }
-    
-    return {
-      score: data.score,
-      feedback: data.feedback,
-      keyword_matches: data.keyword_matches || [],
-      missing_keywords: data.missing_keywords || [],
-      formatting_issues: data.formatting_issues || [],
-      improvement_suggestions: data.improvement_suggestions || [],
+  });
+  
+  if (!data || typeof data.score === 'undefined') {
+    throw new Error('No analysis results returned');
+  }
+  
+  return {
+    score: data.score,
+    feedback: data.feedback,
+    keyword_matches: data.keyword_matches || [],
+    missing_keywords: data.missing_keywords || [],
+    formatting_issues: data.formatting_issues || [],
+    improvement_suggestions: data.improvement_suggestions || [],
       detailed_assessment: data.detailed_assessment || {},
       keyword_match_percentage: data.keyword_match_percentage || 0,
-      content_hash: data.content_hash,
-      analyzed_at: data.analyzed_at,
-      from_cache: data.from_cache || false
-    };
+    content_hash: data.content_hash,
+    analyzed_at: data.analyzed_at,
+    from_cache: data.from_cache || false
+  };
   } catch (error: any) {
     console.error('AWS Lambda ATS analysis error:', error);
     throw new Error(error.message || 'Failed to analyze resume');
@@ -264,12 +264,12 @@ const PublicResumePage = () => {
       const { lambdaApi } = await import('@/config/aws-lambda');
       
       const data = await lambdaApi.createResume({
-        title: resumeContent.contactInfo.name ? `${resumeContent.contactInfo.name}'s Resume` : 'My Resume',
-        content: resumeContent,
-        originalText,
-        jobDescription,
-        selectedTemplate,
-        atsScore: atsAnalysis?.score // Explicitly pass the ATS score
+          title: resumeContent.contactInfo.name ? `${resumeContent.contactInfo.name}'s Resume` : 'My Resume',
+          content: resumeContent,
+          originalText,
+          jobDescription,
+          selectedTemplate,
+          atsScore: atsAnalysis?.score // Explicitly pass the ATS score
       }, token || undefined);
       
       if (!data) {
