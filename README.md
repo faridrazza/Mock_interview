@@ -1,6 +1,12 @@
 # MockInterview4u - AWS Lambda Hackathon Submission
 
-> **AWS Lambda Hackathon Entry**: [Submit on Devpost](https://awslambdahackathon.devpost.com/)
+> **AWS Lambda Hackathon Project Entry**
+
+## **Project Overview**
+
+**MockInterview4u** is an AI-driven platform designed to help job seekers confidently prepare for interviews and build standout resumes. It offers mock interview simulations with AI feedback, and a ATS-friendly resume builder that lets users upload or create resumes from scratch, enhance content with AI, and export professional templates with ease.
+
+---
 
 ## **Tech Stack**
 
@@ -45,10 +51,6 @@
 | `EnhanceResumeFunction` | `/enhance-resume` | AI-powered resume content improvement | API Gateway POST |
 | `CreateResumeFunction` | `/create-resume` | Resume storage and user management | API Gateway POST + OPTIONS |
 
-### **Trigger Configuration Details:**
-- **8 Functions**: Standard POST-only API Gateway triggers for core AI processing
-- **3 Functions**: POST + OPTIONS triggers for CORS-enabled endpoints (file uploads, public access, authentication)
-- **All triggers**: Route through single `MockInterviewAPI` gateway with unified CORS configuration
 
 ### **AWS Infrastructure Components:**
 - **API Gateway**: `MockInterview4u-API` with CORS support for binary media
@@ -57,24 +59,19 @@
 
 ---
 
-## **Project Overview**
-
-**MockInterview4u** is an AI-driven platform designed to help job seekers confidently prepare for interviews and build standout resumes. It offers mock interview simulations with AI feedback, and a ATS-friendly resume builder that lets users upload or create resumes from scratch, enhance content with AI, and export professional templates with ease.
-
----
 
 ## **What Makes This Special**
 
-### **Real Business Impact:**
-- **Active User Base**: Currently serving interview preparation needs for job seekers
-- **Production-Ready**: Migrated from Supabase to AWS Lambda while maintaining full functionality
-- **Scalable Solution**: Handles varying interview loads with serverless efficiency
+MockInterview4U isn't just another career tool — it's built to solve real problems faced by job seekers:
 
-### **Technical Excellence:**
-- **Advanced AI Integration**: OpenAI GPT-4 for intelligent question generation and feedback
-- **Voice Processing**: Amazon Polly for realistic speech synthesis with lip-sync data
-- **Sophisticated Logic**: Experience-level adaptive questioning and comprehensive feedback analysis
-- **Event-Driven Architecture**: Demonstrates multiple AWS Lambda triggers and integrations
+Realistic Practice: Simulates real interview scenarios with both standard and advanced AI, helping users reduce anxiety and improve performance.
+
+Instant Feedback: Get personalized suggestions immediately after each session — no waiting, no guessing.
+
+Resume + Interview in One: Combines AI-powered mock interviews with an ATS-friendly resume builder, making it a complete job-prep solution.
+
+Built for Outcomes: Helps users confidently walk into interviews with a strong resume and stronger answers.
+
 
 ---
 
@@ -590,53 +587,26 @@ In the Dashboard > Resume section, users can click on the "Create Resume" button
 ## **Deployment & Testing**
 
 ### **Quick Start:**
-```bash
-# Clone and navigate to Lambda functions
-git clone [repo-url]
-cd aws-lambda-functions
 
-# Install dependencies and deploy
+# Clone and navigate to project
+git clone [repo-url]
+cd avatar-interview-boost
+
+# Install frontend dependencies
+npm install
+
+# Navigate to Lambda functions and install their dependencies
+cd aws-lambda-functions
 npm run build
+
+# Build and deploy Lambda functions
+sam build
 sam deploy --guided
 
-# Test endpoints
-npm run test
-```
-
-### **Local Development:**
-```bash
-# Run Lambda functions locally
-sam local start-api
-
-# Test individual functions
-sam local invoke GenerateInterviewQuestionFunction
-```
-
+# Run and Test
+npm run dev
 ---
 
-## **Hackathon Judging Criteria Alignment**
-
-### **Innovation:**
-- ✅ **Novel AI application**: Adaptive interview question generation
-- ✅ **Creative voice integration**: 3D avatar with lip-sync data
-- ✅ **Experience verification**: Detects candidate skill misrepresentation
-
-### **Technical Execution:**
-- ✅ **Production-grade code**: Error handling, logging, monitoring
-- ✅ **Scalable architecture**: Serverless design for variable loads
-- ✅ **AWS best practices**: IAM, security, cost optimization
-
-### **Real-World Impact:**
-- ✅ **Solving actual problems**: Interview preparation for job seekers
-- ✅ **Business viability**: Proven user demand and engagement
-- ✅ **Scalable solution**: Can serve millions of interview sessions
-
-### **AWS Lambda Showcase:**
-- ✅ **Multiple function types**: API triggers, scheduled events
-- ✅ **Service integration**: Lambda orchestrating multiple AWS services
-- ✅ **Performance optimization**: Efficient resource utilization
-
----
 
 ## **Demo Video Highlights**
 
@@ -648,7 +618,6 @@ sam local invoke GenerateInterviewQuestionFunction
 
 ---
 
-**This submission demonstrates how AWS Lambda can power sophisticated AI applications that solve real-world problems while maintaining cost efficiency and scalability. The migration from Supabase to AWS Lambda showcases the practical benefits of serverless architecture for AI-driven applications.**
-
+**This submission demonstrates how AWS Lambda can power sophisticated AI applications that solve real-world problems while maintaining cost efficiency and scalability. 
 ---
 
