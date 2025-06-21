@@ -91,16 +91,24 @@ const PublicResumeUploader: React.FC<PublicResumeUploaderProps> = ({
         formData.append('jobDescription', jobDescription.trim());
       }
       
-            // Use Supabase Edge Function for resume parsing
-      const response = await supabase.functions.invoke('parse-resume', {
+            // Use AWS Lambda function for resume parsing
+      const lambdaEndpoint = 'https://apb59k8zqg.execute-api.us-east-1.amazonaws.com/prod/parse-resume';
+      
+      const response = await fetch(lambdaEndpoint, {
+        method: 'POST',
         body: formData,
         headers: {
           'Accept': 'application/json',
         },
       });
       
-      const data = response.data;
-      const error = response.error;
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({ error: 'Network error' }));
+        throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
+      }
+      
+      const data = await response.json();
+      const error = null;
       
       if (error) {
         throw new Error(error.message || 'Failed to parse resume');

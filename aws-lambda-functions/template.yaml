@@ -30,6 +30,16 @@ Parameters:
     NoEcho: true
     Description: OpenAI API Key for AI functionality
   
+  AdobeClientId:
+    Type: String
+    NoEcho: true
+    Description: Adobe PDF Services Client ID
+  
+  AdobeClientSecret:
+    Type: String
+    NoEcho: true
+    Description: Adobe PDF Services Client Secret
+  
   
 
 Resources:
@@ -187,6 +197,34 @@ Resources:
             Method: post
             RestApiId: !Ref MockInterviewAPI
 
+  # Parse Resume Function (AWS Lambda version with Adobe PDF Services)
+  ParseResumeFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src/parse-resume/
+      Handler: index.handler
+      Description: Parse resume files (PDF/DOCX) using Adobe PDF Services API and extract structured data
+      Timeout: 60
+      MemorySize: 1024
+      Environment:
+        Variables:
+          OPENAI_API_KEY: !Ref OpenAIApiKey
+          ADOBE_CLIENT_ID: !Ref AdobeClientId
+          ADOBE_CLIENT_SECRET: !Ref AdobeClientSecret
+      Events:
+        ParseResume:
+          Type: Api
+          Properties:
+            Path: /parse-resume
+            Method: post
+            RestApiId: !Ref MockInterviewAPI
+        ParseResumeOptions:
+          Type: Api
+          Properties:
+            Path: /parse-resume
+            Method: options
+            RestApiId: !Ref MockInterviewAPI
+
   # Enhance Resume Function
   EnhanceResumeFunction:
     Type: AWS::Serverless::Function
@@ -231,6 +269,11 @@ Resources:
       Name: MockInterview4u-API
       StageName: prod
       Description: API Gateway for MockInterview4u Lambda functions
+      BinaryMediaTypes:
+        - 'multipart/form-data'
+        - 'application/pdf'
+        - 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+        - 'application/msword'
       Cors:
         AllowMethods: "'GET,POST,OPTIONS'"
         AllowHeaders: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"

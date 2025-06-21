@@ -72,4 +72,13 @@ manifest_hash = "aa37a1725f74aecec17c799b26d241b5"
 packagetype = "Zip"
 functions = ["EnhanceResumeFunction"]
 
+[function_build_definitions.7c5fb718-ae39-43cb-be76-8de9c15a31c5]
+codeuri = "C:\\Users\\moham\\avatar-interview-boost\\aws-lambda-functions\\src\\parse-resume"
+runtime = "nodejs18.x"
+architecture = "x86_64"
+handler = "index.handler"
+manifest_hash = "a59ae9a19524c3ac4425a61582ab2c47"
+packagetype = "Zip"
+functions = ["ParseResumeFunction"]
+
 [layer_build_definitions]
