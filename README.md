@@ -52,10 +52,20 @@
 | `CreateResumeFunction` | `/create-resume` | Resume storage and user management | API Gateway POST + OPTIONS |
 
 
-### **AWS Infrastructure Components:**
-- **API Gateway**: `MockInterview4u-API` with CORS support for binary media
-- **S3**: File storage bucket
-- **CloudFormation**: Complete Infrastructure as Code deployment
+### **Lambda Triggers Implementation :**
+
+**Primary Trigger: API Gateway HTTP Events**
+- All 11 Lambda functions are triggered via **API Gateway REST API endpoints**
+- Each function responds to HTTP POST requests with JSON payloads
+- CORS-enabled endpoints support web application integration
+- Real-time serverless execution triggered by user interactions
+
+**Trigger Examples:**
+- User starts interview → `POST /generate-interview-question` → Triggers question generation Lambda
+- User speaks answer → `POST /speech-processor` → Triggers OpenAI Whisper transcription Lambda  
+- User uploads resume → `POST /parse-resume` → Triggers Adobe PDF parsing Lambda
+- AI speaks question → `POST /text-to-speech` → Triggers Amazon Polly synthesis Lambda
+- User requests feedback → `POST /generate-interview-feedback` → Triggers analysis Lambda
 
 ---
 
@@ -64,7 +74,7 @@
 
 MockInterview4U isn't just another career tool — it's built to solve real problems faced by job seekers:
 
-Realistic Practice: Simulates real interview scenarios with both standard and advanced AI, helping users reduce anxiety and improve performance.
+Mock Interview Practice: Simulates real interview scenarios with both standard and advanced AI, helping users reduce anxiety and improve performance.
 
 Instant Feedback: Get personalized suggestions immediately after each session — no waiting, no guessing.
 
@@ -545,29 +555,7 @@ In the Dashboard > Resume section, users can click on the "Create Resume" button
 
 ---
 
-## **Key Differentiators for Hackathon**
 
-### **1. Real-World Application**
-- **Not a toy project**: Solving actual interview preparation needs
-- **Production migration**: Successfully moved from Supabase to AWS Lambda
-- **User validation**: Platform with active users and feedback
-
-### **2. Advanced AI Implementation**
-- **Sophisticated prompting**: Experience-level adaptive AI conversations
-- **Fallback mechanisms**: Graceful degradation when AI services fail
-- **Context awareness**: Maintains conversation flow and continuity
-
-### **3. Comprehensive AWS Integration**
-- **Multiple Lambda triggers**: API Gateway, EventBridge scheduled events
-- **Service orchestration**: Lambda, Polly, DynamoDB, S3 working together
-- **Monitoring & observability**: CloudWatch integration for production readiness
-
-### **4. Performance & Scalability**
-- **Optimized functions**: Efficient memory usage and execution times
-- **Caching strategies**: DynamoDB for analytics and performance optimization
-- **Error handling**: Robust error management and retry logic
-
----
 
 ## **Business Impact & Metrics**
 
@@ -575,35 +563,29 @@ In the Dashboard > Resume section, users can click on the "Create Resume" button
 - **Interview Anxiety**: AI-powered practice reduces candidate stress
 - **Skill Assessment**: Objective feedback helps identify improvement areas  
 - **Cost-Effective Preparation**: Accessible alternative to expensive coaching
+- **ATS Resume Analysis and building**: AI analysis and resume building 
 
-### **Technical Metrics:**
-- **Function Duration**: ~2-5 seconds for question generation
-- **Feedback Processing**: ~10-15 seconds for comprehensive analysis
-- **Voice Synthesis**: ~3-5 seconds for natural speech generation
-- **Cost Efficiency**: 90% cost reduction vs. traditional server infrastructure
 
 ---
 
 ## **Deployment & Testing**
 
-### **Quick Start:**
-
-# Clone and navigate to project
+**Clone and navigate to project**
 git clone [repo-url]
 cd avatar-interview-boost
 
-# Install frontend dependencies
+# **Install frontend dependencies**
 npm install
 
-# Navigate to Lambda functions and install their dependencies
+# **Navigate to Lambda functions and install their dependencies**
 cd aws-lambda-functions
 npm run build
 
-# Build and deploy Lambda functions
+# **Build and deploy Lambda functions**
 sam build
 sam deploy --guided
 
-# Run and Test
+# **Run and Test**
 npm run dev
 ---
 
