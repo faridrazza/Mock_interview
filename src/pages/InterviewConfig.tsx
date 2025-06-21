@@ -126,7 +126,7 @@ const InterviewConfig = () => {
               You've used all your standard interviews for this month ({usageData?.standardInterviewsUsed} of {usageData?.standardInterviewsUsed + (usageData?.standardInterviewsRemaining || 0)}).
               <div className="mt-4">
                 <Button 
-                  onClick={() => navigate('/dashboard?tab=subscription')}
+                  onClick={() => navigate('/dashboard?tab=overview')}
                   variant="outline"
                 >
                   Upgrade Your Plan

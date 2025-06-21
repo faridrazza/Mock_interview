@@ -122,7 +122,7 @@ const ResumePdfExport: React.FC<ResumePdfExportProps> = ({
     // Update to direct users to either interview or resume plans tab
     // based on whether they might already have an interview plan
     const hasInterviewPlan = ['gold', 'diamond', 'megastar'].includes(profile?.subscription_tier || '');
-    navigate('/dashboard?tab=subscription', {
+          navigate('/dashboard?tab=overview', {
       state: { showResumePlans: !hasInterviewPlan }
     });
   };

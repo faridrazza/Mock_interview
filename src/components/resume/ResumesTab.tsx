@@ -132,9 +132,7 @@ const ResumesTab = () => {
   
   const handleNavigateToPlans = () => {
     setShowSubscriptionDialog(false);
-    navigate('/dashboard?tab=subscription', {
-      state: { showResumePlans: true }
-    });
+    navigate('/dashboard?tab=overview');
   };
   
   const handleCreateResume = async () => {
@@ -313,9 +311,7 @@ const ResumesTab = () => {
 
   // Handle subscription navigation
   const handleSubscriptionNavigation = () => {
-    navigate('/dashboard?tab=subscription', {
-      state: { showResumePlans: true }
-    });
+    navigate('/dashboard?tab=overview');
   };
   
   // Display authentication error if user is not signed in

@@ -87,7 +87,7 @@ const ThankYou = () => {
         </CardContent>
         <CardFooter className="flex justify-center">
           <Button 
-            onClick={() => navigate('/dashboard?tab=subscription')}
+                          onClick={() => navigate('/dashboard?tab=overview')}
             className="min-w-[200px]"
           >
             Return to Dashboard

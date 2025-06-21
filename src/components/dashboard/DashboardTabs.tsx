@@ -2,11 +2,10 @@ import React, { useEffect } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import OverviewTab from './OverviewTab';
 import InterviewsTab from './InterviewsTab';
-import SubscriptionSettings from './SubscriptionSettings';
 import ResumesTab from '@/components/resume/ResumesTab';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Briefcase, Building, CreditCard, FileText } from 'lucide-react';
+import { Briefcase, Building } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { invalidateUsageCache } from '@/utils/subscriptionUtils';
 
@@ -31,7 +30,6 @@ const DashboardTabs = ({ activeTab, setActiveTab, showResumePlans = false }: Das
     setActiveTab(value);
     
     // Update the URL to reflect the tab change while preserving existing query parameters
-    // This is crucial for PayPal payment flows that include success/subscription_id parameters
     const currentParams = new URLSearchParams(window.location.search);
     currentParams.set('tab', value);
     navigate(`/dashboard?${currentParams.toString()}`, { replace: true });
@@ -58,12 +56,6 @@ const DashboardTabs = ({ activeTab, setActiveTab, showResumePlans = false }: Das
             className="flex-1 text-xs sm:text-sm px-2 sm:px-4 data-[state=active]:bg-brand-50 dark:data-[state=active]:bg-brand-900/20 data-[state=active]:text-brand-600 dark:data-[state=active]:text-brand-400"
           >
             Resumes
-          </TabsTrigger>
-          <TabsTrigger 
-            value="subscription" 
-            className="flex-1 text-xs sm:text-sm px-2 sm:px-4 data-[state=active]:bg-brand-50 dark:data-[state=active]:bg-brand-900/20 data-[state=active]:text-brand-600 dark:data-[state=active]:text-brand-400"
-          >
-            Subscription
           </TabsTrigger>
         </TabsList>
       </div>
@@ -106,10 +98,6 @@ const DashboardTabs = ({ activeTab, setActiveTab, showResumePlans = false }: Das
 
       <TabsContent value="resumes">
         <ResumesTab />
-      </TabsContent>
-
-      <TabsContent value="subscription">
-        <SubscriptionSettings showResumePlans={showResumePlans} />
       </TabsContent>
     </Tabs>
   );

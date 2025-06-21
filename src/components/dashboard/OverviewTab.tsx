@@ -122,19 +122,12 @@ const OverviewTab = () => {
       const currentParams = new URLSearchParams(location.search);
       const currentTab = currentParams.get('tab');
       
-      if (currentTab === 'subscription') {
-        // If already on subscription tab, add a timestamp to force re-render
-        // but preserve any existing parameters like success or subscription_id
-        currentParams.set('_t', Date.now().toString());
-        navigate(`/dashboard?${currentParams.toString()}`, { replace: true });
-      } else {
-        // Normal navigation to subscription tab
-        navigate('/dashboard?tab=subscription');
-      }
+      // Navigate to overview tab since subscription tab is removed
+      navigate('/dashboard?tab=overview');
     } catch (error) {
       console.error('Navigation error:', error);
       // Fallback navigation
-      window.location.href = '/dashboard?tab=subscription';
+      window.location.href = '/dashboard?tab=overview';
     }
   }, [navigate, location]);
 

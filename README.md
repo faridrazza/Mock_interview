@@ -1,14 +1,69 @@
-# 🚀 MockInterview4u - AWS Lambda Hackathon Submission
+# MockInterview4u - AWS Lambda Hackathon Submission
 
-## 🎯 **Project Overview**
+> **AWS Lambda Hackathon Entry**: [Submit on Devpost](https://awslambdahackathon.devpost.com/)
 
-**MockInterview4u** is an AI-powered interview preparation platform that has been **successfully migrated to AWS Lambda** for the hackathon, demonstrating sophisticated serverless architecture and real-world AI applications.
+## **Tech Stack**
 
-### 🏆 **Hackathon Category:** AWS Lambda
+### **AWS Cloud Infrastructure:**
+- **AWS Lambda** - 11 serverless functions 
+- **API Gateway** - RESTful API endpoints with CORS configuration
+- **Amazon Polly** - Neural text-to-speech with lip-sync data generation
+- **S3** - File storage 
+- **CloudFormation/SAM** - Infrastructure as Code deployment
+
+### **AI & External Services:**
+- **OpenAI GPT-4** - AI Integration in the application
+- **OpenAI Whisper** - Speech-to-text transcription (I used Aws speech to text but my free tired expired so i switched to whisper)
+- **Adobe PDF Services** - Enterprise-grade PDF text extraction
+- **Supabase PostgreSQL** - Primary database
+
+### **Frontend Technologies:**
+- **Vite** - Fast build tool and development server
+- **TypeScript** - Type-safe JavaScript development
+- **React** - Component-based UI framework
+- **shadcn/ui** - Modern React component library
+- **Tailwind CSS** - Utility-first CSS framework
+- **Three.js/React Three Fiber** - 3D avatar rendering and animation
 
 ---
 
-## 🌟 **What Makes This Special**
+## **AWS Lambda Functions Overview**
+
+### **11 Serverless Functions Powering the Platform:**
+
+| Function | Endpoint | Purpose | Triggers |
+|----------|----------|---------|----------|
+| `GenerateInterviewQuestionFunction` | `/generate-interview-question` | Standard AI interview question generation | API Gateway POST |
+| `GenerateInterviewFeedbackFunction` | `/generate-interview-feedback` | Comprehensive interview feedback analysis | API Gateway POST |
+| `TextToSpeechFunction` | `/text-to-speech` | Amazon Polly voice synthesis with lip-sync | API Gateway POST |
+| `InterviewAIFunction` | `/interview-ai` | Advanced AI conversation management | API Gateway POST |
+| `ATSAnalysisFunction` | `/ats-analysis` | Resume ATS compatibility scoring | API Gateway POST + OPTIONS |
+| `SpeechProcessorFunction` | `/speech-to-text` | OpenAI Whisper speech-to-text | API Gateway POST |
+| `AdvancedInterviewAIFunction` | `/advanced-interview-ai` | Company-specific interview engine | API Gateway POST |
+| `GenerateCompanyQuestionsFunction` | `/generate-company-questions` | Company-specific question generation | API Gateway POST |
+| `ParseResumeFunction` | `/parse-resume` | Adobe PDF Services text extraction | API Gateway POST + OPTIONS |
+| `EnhanceResumeFunction` | `/enhance-resume` | AI-powered resume content improvement | API Gateway POST |
+| `CreateResumeFunction` | `/create-resume` | Resume storage and user management | API Gateway POST + OPTIONS |
+
+### **Trigger Configuration Details:**
+- **8 Functions**: Standard POST-only API Gateway triggers for core AI processing
+- **3 Functions**: POST + OPTIONS triggers for CORS-enabled endpoints (file uploads, public access, authentication)
+- **All triggers**: Route through single `MockInterviewAPI` gateway with unified CORS configuration
+
+### **AWS Infrastructure Components:**
+- **API Gateway**: `MockInterview4u-API` with CORS support for binary media
+- **S3**: File storage bucket
+- **CloudFormation**: Complete Infrastructure as Code deployment
+
+---
+
+## **Project Overview**
+
+**MockInterview4u** is an AI-driven platform designed to help job seekers confidently prepare for interviews and build standout resumes. It offers mock interview simulations with AI feedback, and a ATS-friendly resume builder that lets users upload or create resumes from scratch, enhance content with AI, and export professional templates with ease.
+
+---
+
+## **What Makes This Special**
 
 ### **Real Business Impact:**
 - **Active User Base**: Currently serving interview preparation needs for job seekers
@@ -23,19 +78,17 @@
 
 ---
 
-## 🏗️ **AWS Lambda Implementation**
+## **AWS Lambda Implementation**
 
 ### **Core Lambda Functions:**
 
 Starting with **Standard AI Interview Feature - Complete Breakdown**
 
-
-
 **Step-by-Step Flow:**
 
 1. Interview Configuration (`InterviewConfig.tsx`)
    - User selects job role and 
-   - User has  option to select either fresher or experienced
+   - User has option to select either fresher or experienced
    - If the user selects "Experienced," they should be prompted to enter their years of experience.
    - Subscription limit checking
    - Session storage for configuration
@@ -53,13 +106,14 @@ Starting with **Standard AI Interview Feature - Complete Breakdown**
    - Fallback system for reliability
 
 4. Text-to-Speech with Lip-Sync **(AWS LAMDA)**
-   - Amazon Polly neural voice synthesis
+   - **Amazon Polly** neural voice synthesis
    - Advanced phonetic lip-sync generation
    - Rhubarb mouth shape mapping (A-H, X)
    - Timing synchronization
 
 5. 3D Avatar Rendering (`Avatar3D.tsx`)
    - Three.js/React Three Fiber
+   - 3D Avatar glb.file and animation file
    - Real-time mouth shape application
    - 60 FPS smooth animation
    - Performance-optimized facial mesh updates
@@ -78,7 +132,7 @@ Starting with **Standard AI Interview Feature - Complete Breakdown**
    - Multi-dimensional scoring (communication, technical, clarity)
    - Actionable insights (Areas of improvemnt)
 
-## 🎤 **Lip-Sync Technology Explained**
+## **Lip-Sync Technology Explained**
 
 ### **How It Works:**
 1. **Phonetic Analysis**: Text is broken down into speech sounds (phonemes)
@@ -106,7 +160,7 @@ Starting with **Standard AI Interview Feature - Complete Breakdown**
 - **React Three Fiber**: React integration for 3D
 - **GLTF Models**: 3D avatar with morph targets
 
-**📁 Files Used in Standard AI Feature:**
+**Files Used in Standard AI Feature:**
 
 **Frontend Files:**
 - `src/pages/InterviewConfig.tsx` - Interview configuration UI
@@ -126,7 +180,7 @@ Starting with **Standard AI Interview Feature - Complete Breakdown**
 - `aws-lambda-functions/src/text-to-speech/index.js` - Amazon Polly integration
 - `aws-lambda-functions/src/speech-processor/index.js` - OpenAI Whisper transcription
 
-**🚀 AWS Lambda Triggers Used in Standard AI Feature:**
+**AWS Lambda Triggers Used in Standard AI Feature:**
 
 1. **API Gateway HTTP Triggers** - All Lambda functions are triggered via API Gateway endpoints:
    - `POST /generate-interview-question` - Triggers question generation Lambda
@@ -148,16 +202,15 @@ Starting with **Standard AI Interview Feature - Complete Breakdown**
    - Results flow back through API Gateway to frontend
    - No server management required - pure serverless architecture
 
-   This documentation shows exactly how each component works together to create a sophisticated, production-ready interview preparation platform powered by AWS Lambda
+This documentation shows exactly how each component works together to create a sophisticated, production-ready interview preparation platform powered by AWS Lambda
 
 ---
 
-### 🧠 **2. Advanced AI Interview Feature**
+### **2. Advanced AI Interview Feature**
 
 The Advanced AI Interview provides company-specific interview preparation with advnance interview questions from major tech companies, enhanced mock interviews detailed preparation guidance.
 
-**📁 Files Used in Advanced AI Feature:**
-
+**Files Used in Advanced AI Feature:**
 
 **Step-by-Step Flow:**
 
@@ -208,7 +261,6 @@ The Advanced AI Interview provides company-specific interview preparation with a
    - Preparation suggestions formatted for study
    - Exportable for offline interview preparation
 
-
 **Frontend Files Advance AI Feature:**
 - `src/pages/AdvancedInterviewConfig.tsx` - Company and role selection interface
 - `src/pages/AdvancedInterviewSession.tsx` - Advanced interview session management
@@ -228,8 +280,7 @@ The Advanced AI Interview provides company-specific interview preparation with a
 - `aws-lambda-functions/src/text-to-speech/index.js` - Amazon Polly integration (shared)
 - `aws-lambda-functions/src/speech-processor/index.js` - OpenAI Whisper transcription (shared)
 
-
-**🚀 AWS Lambda Triggers Used in Advanced AI Feature:**
+**AWS Lambda Triggers Used in Advanced AI Feature:**
 
 1. **API Gateway HTTP Triggers** - Advanced interview Lambda functions triggered via endpoints:
    - `POST /generate-company-questions` - Triggers company-specific question generation
@@ -246,21 +297,13 @@ The Advanced AI Interview provides company-specific interview preparation with a
    - User answers question → Next question Lambda triggered
    - User requests feedback → Advanced feedback Lambda triggered 
 
-
-
-
-
-
-
 ---
 
-## 📊 **ATS Score System - Complete Workflow**
+## **ATS Score System - Complete Workflow**
 
 ### **3. Intelligent ATS Compatibility Analysis**
 
 The platform features a sophisticated ATS (Applicant Tracking System) scoring system that evaluates resume compatibility using AI-powered analysis across multiple AWS Lambda functions.
-
-**📁 Files Used in ATS Score System:**
 
 **Step-by-Step ATS Score Workflow:**
 
@@ -271,7 +314,6 @@ The platform features a sophisticated ATS (Applicant Tracking System) scoring sy
    - `parse-resume` Lambda function extracts text using Adobe PDF Services
    - OpenAI GPT-4 structures raw text into standardized resume format
    - Returns parsed resume content and original text
-   
 
 2. **ATS Compatibility Analysis** (`PublicResumePage.tsx` → `ats-analysis` **AWS LAMBDA**)
    - Parsed resume content sent to `ats-analysis` Lambda function
@@ -311,7 +353,8 @@ The platform features a sophisticated ATS (Applicant Tracking System) scoring sy
    - **Real-time Preview**: Live template rendering 
    - **Auto-save Functionality**: Draft preservation in localStorage
    - **AI Enhancement Features**: Section-by-section content improvement using OpenAI GPT-4
-   -
+
+**Files Used in ATS Score System:**
 
 **Frontend Files:**
 - `src/components/resume/PublicResumeUploader.tsx` - File upload and initial processing
@@ -326,8 +369,7 @@ The platform features a sophisticated ATS (Applicant Tracking System) scoring sy
 - `aws-lambda-functions/src/create-resume/index.js` - Resume storage with ATS score preservation
 - `aws-lambda-functions/src/enhance-resume/index.js` - AI-powered content improvement in editor
 
-
-**🚀 AWS Lambda Triggers Used in ATS Score System:**
+**AWS Lambda Triggers Used in ATS Score System:**
 
 1. **Multi-Stage Processing Pipeline**:
    - File upload → `parse-resume` Lambda triggered with Adobe PDF Services integration
@@ -335,7 +377,6 @@ The platform features a sophisticated ATS (Applicant Tracking System) scoring sy
    - Score calculation → Frontend displays comprehensive results with improvement suggestions
    - User saves resume → `create-resume` Lambda triggered with Resume data preservation
    - User enhances content → `enhance-resume` Lambda triggered for AI-powered improvements
-   
 
 2. **Intelligent Content Processing**:
    - **Adobe PDF Services Integration**: Enterprise-grade PDF text extraction with complex layout handling
@@ -348,41 +389,49 @@ The platform features a sophisticated ATS (Applicant Tracking System) scoring sy
    - **Authenticated User Integration**: Permanent storage with full editing capabilities
    - **Session Management**: Seamless transition from anonymous to authenticated workflows
 
-**📈 ATS Score Value Proposition:**
+**ATS Score Value Proposition:**
 
 - **Immediate Feedback**: Instant 0-100 compatibility score with detailed breakdown
 - **Actionable Insights**: Specific improvements categorized by impact and difficulty
 - **Template Optimization**: ATS-friendly designs Templates
 
-
 **Complete ATS Workflow: Upload → Parse → Analyze → Score Display → Save with Score → Edit & Enhance**
 
 The `enhance-resume` Lambda function is integral to the complete workflow, providing users with AI-powered improvements based on their original ATS analysis results. This creates a full cycle from analysis to actionable improvements.
 
+**How ATS Score Flow Works:**
+
+When a user uploads their resume (PDF or DOCX) through the PublicResumeUploader component, the following process is triggered:
+
+**Resume Parsing:**
+The file is sent to the resume parsing function to extract structured information.
+
+**ATS Analysis:**
+The parsed data is passed to the ATS analysis service, which evaluates the resume and returns:
+- An AI-generated ATS score
+- Suggestions for improvement
+
+**Resume Preview:**
+The system then displays a preview of how the resume would look in one of our custom templates.
+
+**Continue to Edit:**
+If the user clicks the "Continue to Edit" button:
+- If logged in, they are redirected to the dashboard and taken to the Modern Resume Editor.
+- If not logged in, they are prompted to log in or sign up first.
+
+**Editing & Enhancement (Modern Resume Editor):**
+Users can edit resume content, switch templates, and use the "Enhance with AI" feature, which calls an AWS Lambda function to generate improved content.
+
+**Final Output:**
+Once editing is done, users can preview and download the resume in PDF format.
+
 ---
 
-## 🏗️ **Resume Builder System - Dashboard Integration**
+## **Resume Builder System**
 
 ### **4. Comprehensive Resume Creation Platform**
 
 The Resume Builder system provides authenticated users with a full-featured resume creation and editing platform integrated into the dashboard, offering both upload and manual creation workflows.
-
-**📁 Files Used in Resume Builder System:**
-
-**Frontend Files:**
-- `src/components/resume/ResumeUploader.tsx` - PDF upload and parsing interface
-- `src/pages/ResumeBuilderUpload.tsx` - Upload workflow management
-- `src/pages/ModernResumeEditor.tsx` - Full-featured resume editor
-- `src/components/resume/ResumeTemplatePreview.tsx` - Template rendering engine
-- `src/pages/ResumePreview.tsx` - Final preview and PDF export
-- `src/components/resume/EnhanceWithAI.tsx` - AI content enhancement interface
-
-**AWS Lambda Functions:**
-- `aws-lambda-functions/src/parse-resume/index.js` - PDF text extraction and structuring
-- `aws-lambda-functions/src/create-resume/index.js` - Resume storage and user account management
-- `aws-lambda-functions/src/enhance-resume/index.js` - AI-powered content improvement
-
-
 
 **Resume Builder Workflow Options:**
 
@@ -392,20 +441,17 @@ The Resume Builder system provides authenticated users with a full-featured resu
    - Drag-and-drop or file selection interface for PDF/DOCX files
    - `parse-resume` **AWS LAMBDA** extracts structured data using Adobe PDF Services
    - OpenAI GPT-4 converts raw text to standardized resume format
-   
 
-   
 **Option 2: Manual Resume Creation**
 
 1. **Step-by-Step Input Interface**
    - Section-by-section maunal data filling
-   
 
 2. **AI-Assisted Content Generation**
    - "Enhance with AI" buttons throughout the creation process in summary, work experince and project sections.
    - Context-aware content suggestions
 
-**🎨 Modern Resume Editor Features** (`ModernResumeEditor.tsx`)
+**Modern Resume Editor Features** (`ModernResumeEditor.tsx`)
 
 1. **Advanced Editing Interface**
    - **Three-Panel Layout**: Section editor, resume preview, customization options
@@ -434,7 +480,7 @@ The Resume Builder system provides authenticated users with a full-featured resu
    - **Template Switching**: Live template changes in preview mode
    - **Print Optimization**: Proper page breaks and formatting for physical printing
 
-**🚀 AWS Lambda Integration in Resume Builder:**
+**AWS Lambda Integration in Resume Builder:**
 
 1. **Multi-Stage Content Processing**:
    - Upload workflow → `parse-resume` Lambda extracts and structures PDF content
@@ -452,7 +498,7 @@ The Resume Builder system provides authenticated users with a full-featured resu
    - **Professional Language**: Converts casual descriptions to professional resume language
    - **ATS Optimization**:  enhanced content maintains ATS compatibility
 
-**📈 Resume Builder Value Proposition:**
+**Resume Builder Value Proposition:**
 
 - **Dual Creation Paths**: Upload existing resume or create from scratch with equal functionality
 - **AI-Powered Enhancement**: content generation that sounds authentic
@@ -462,13 +508,47 @@ The Resume Builder system provides authenticated users with a full-featured resu
 - **Enterprise-Grade Processing**: Reliable PDF parsing with Adobe PDF Services
 - **User-Friendly Interface**: Intuitive editing experience
 
+**Files Used in Resume Builder System:**
 
+**Frontend Files:**
+- `src/components/resume/ResumeUploader.tsx` - PDF upload and parsing interface
+- `src/pages/ResumeBuilderUpload.tsx` - Upload workflow management
+- `src/pages/ModernResumeEditor.tsx` - Full-featured resume editor
+- `src/components/resume/ResumeTemplatePreview.tsx` - Template rendering engine
+- `src/pages/ResumePreview.tsx` - Final preview and PDF export
+- `src/components/resume/EnhanceWithAI.tsx` - AI content enhancement interface
 
+**AWS Lambda Functions:**
+- `aws-lambda-functions/src/parse-resume/index.js` - PDF text extraction and structuring
+- `aws-lambda-functions/src/create-resume/index.js` - Resume storage and user account management
+- `aws-lambda-functions/src/enhance-resume/index.js` - AI-powered content improvement
 
+**Resume Builder – Overview:**
+
+In the Dashboard > Resume section, users can click on the "Create Resume" button to begin building a resume. They are given two options:
+
+**1. Upload Existing PDF Resume**
+- Users can upload their current resume in PDF format.
+- The file is processed via our `parse-resume` AWS Lambda function, which extracts relevant information and saves it to the database.
+- The extracted content is then auto-filled into our ATS-optimized resume template within the Modern Resume Editor.
+- Users can edit the resume, and optionally use the "Enhance with AI" feature (powered by the `enhance-resume` Lambda function) to generate or improve content.
+- Once finalized, users can preview and download their resume in PDF format.
+
+**2. Create Manually**
+- Users can manually input their resume details step-by-step.
+- They can also use the "Enhance with AI" option during input to generate content dynamically.
+- The resume is created and edited within the Modern Resume Editor.
+
+**Modern Resume Editor Features:**
+- Real-time editing
+- AI-powered content generation
+- 10 professionally designed templates
+- Layout, color, and design customization options
+- PDF preview and download
 
 ---
 
-## 🔥 **Key Differentiators for Hackathon**
+## **Key Differentiators for Hackathon**
 
 ### **1. Real-World Application**
 - **Not a toy project**: Solving actual interview preparation needs
@@ -492,7 +572,7 @@ The Resume Builder system provides authenticated users with a full-featured resu
 
 ---
 
-## 🎯 **Business Impact & Metrics**
+## **Business Impact & Metrics**
 
 ### **Problem Solved:**
 - **Interview Anxiety**: AI-powered practice reduces candidate stress
@@ -507,7 +587,7 @@ The Resume Builder system provides authenticated users with a full-featured resu
 
 ---
 
-## 🚀 **Deployment & Testing**
+## **Deployment & Testing**
 
 ### **Quick Start:**
 ```bash
@@ -534,7 +614,7 @@ sam local invoke GenerateInterviewQuestionFunction
 
 ---
 
-## 🏆 **Hackathon Judging Criteria Alignment**
+## **Hackathon Judging Criteria Alignment**
 
 ### **Innovation:**
 - ✅ **Novel AI application**: Adaptive interview question generation
@@ -558,7 +638,7 @@ sam local invoke GenerateInterviewQuestionFunction
 
 ---
 
-## 🎬 **Demo Video Highlights**
+## **Demo Video Highlights**
 
 1. **Real-time interview question generation** with experience-level adaptation
 2. **Live voice synthesis** using Amazon Polly with 3D avatar animation
@@ -568,26 +648,7 @@ sam local invoke GenerateInterviewQuestionFunction
 
 ---
 
-## 🌟 **Future AWS Enhancements**
-
-- **Amazon Bedrock**: Multi-model AI for enhanced question variety
-- **Lambda@Edge**: Global content delivery optimization
-- **Step Functions**: Complex interview workflow orchestration
-
+**This submission demonstrates how AWS Lambda can power sophisticated AI applications that solve real-world problems while maintaining cost efficiency and scalability. The migration from Supabase to AWS Lambda showcases the practical benefits of serverless architecture for AI-driven applications.**
 
 ---
 
-## 📞 **Team & Contact**
-
-**Project Lead**: MockInterview4u Development Team  
-**Hackathon Focus**: Production-ready AWS Lambda implementation  
-**Code Repository**: [GitHub Link]  
-**Live Demo**: [Demo URL]
-
----
-
-**💡 This submission demonstrates how AWS Lambda can power sophisticated AI applications that solve real-world problems while maintaining cost efficiency and scalability. The migration from Supabase to AWS Lambda showcases the practical benefits of serverless architecture for AI-driven applications.**
-
----
-
-### 🏆 **Ready for AWS Lambda Hackathon Judging!** 

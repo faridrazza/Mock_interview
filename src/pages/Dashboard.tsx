@@ -33,7 +33,7 @@ const Dashboard = () => {
       window.history.replaceState({}, document.title);
     }
 
-    if (tabParam && ['overview', 'interviews', 'resumes', 'subscription'].includes(tabParam)) {
+    if (tabParam && ['overview', 'interviews', 'resumes'].includes(tabParam)) {
       // If switching to resumes tab, invalidate usage cache
       if (tabParam === 'resumes' && prevTabRef.current !== 'resumes' && user) {
         console.log('Switching to resumes tab, invalidating usage cache');
@@ -42,13 +42,6 @@ const Dashboard = () => {
       
       setActiveTab(tabParam);
       prevTabRef.current = tabParam;
-      
-      // If navigating to subscription tab from another page (like after canceling a redundant plan)
-      // we want to make sure we have the latest profile data
-      if (tabParam === 'subscription' && !subscriptionChangedRef.current && user) {
-        refreshProfile();
-        subscriptionChangedRef.current = true;
-      }
     } else if (!tabParam) {
       // If no tab param is present, default to overview
       setActiveTab('overview');
@@ -97,11 +90,11 @@ const Dashboard = () => {
           
           // Verify the subscription is actually active before setting the active tab
           refreshProfile().then(() => {
-            // Set active tab to subscription
-            setActiveTab('subscription');
+            // Set active tab to overview since subscription tab is removed
+            setActiveTab('overview');
             
             // Update URL without reloading the page
-            navigate('/dashboard?tab=subscription', { replace: true });
+            navigate('/dashboard?tab=overview', { replace: true });
           });
         } catch (err) {
           console.error("Error parsing selected plan from session storage:", err);

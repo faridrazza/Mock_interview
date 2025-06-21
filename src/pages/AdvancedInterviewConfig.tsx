@@ -257,7 +257,7 @@ const AdvancedInterviewConfig = () => {
                 You've used all your advanced interviews for this month ({usageData?.advancedInterviewsUsed} of {usageData?.advancedInterviewsUsed + (usageData?.advancedInterviewsRemaining || 0)}).
                 <div className="mt-4">
                   <Button 
-                    onClick={() => navigate('/dashboard?tab=subscription')}
+                    onClick={() => navigate('/dashboard?tab=overview')}
                     variant="outline"
                   >
                     Upgrade Your Plan

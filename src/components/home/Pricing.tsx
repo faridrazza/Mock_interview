@@ -147,8 +147,8 @@ const Pricing = () => {
       return;
     }
 
-    // If user is logged in, redirect to dashboard with subscription tab active
-    navigate('/dashboard?tab=subscription');
+            // If user is logged in, redirect to dashboard 
+        navigate('/dashboard?tab=overview');
     
     // Show toast with information about selecting the plan
     toast({
