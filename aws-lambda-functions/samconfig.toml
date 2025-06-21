@@ -20,5 +20,7 @@ parameter_overrides = [
     "CorsOrigins=http://localhost:5173,http://localhost:3000,http://localhost:8080,http://localhost:8081",
     "OpenAIApiKey=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",
     "AdobeClientId=ddb26bb533714329b40d7eeeab357bfa",
-    "AdobeClientSecret=p8e-6g17Rfxv82brvDZ21WdiR_HVqxw1OSe5"
+    "AdobeClientSecret=p8e-6g17Rfxv82brvDZ21WdiR_HVqxw1OSe5",
+    "SupabaseUrl=https://lfpmxqcqygujcftysbtu.supabase.co",
+    "SupabaseServiceRoleKey=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxmcG14cWNxeWd1amNmdHlzYnR1Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTczMjk4MjA3NiwiZXhwIjoyMDQ4NTU4MDc2fQ.fZTXgbILLJHdIEm4kKJO4iWqVqxNKcmMGfZWnwDOEQg"
 ] 

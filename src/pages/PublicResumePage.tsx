@@ -24,6 +24,7 @@ import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import ATSScoreIndicator from '@/components/resume/ATSScoreIndicator';
 import { ResumeContent, ATSAnalysis } from '@/types/resume';
+import { supabase } from '@/lib/supabase';
 import { useAuth } from '@/contexts/AuthContext';
 import PublicResumeUploader from '@/components/resume/PublicResumeUploader';
 import ResumeTemplatePreview from '@/components/resume/ResumeTemplatePreview';

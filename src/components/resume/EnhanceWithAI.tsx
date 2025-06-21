@@ -103,10 +103,10 @@ const EnhanceWithAI: React.FC<EnhanceWithAIProps> = ({
       // Use AWS Lambda enhance-resume function
       const { lambdaApi } = await import('@/config/aws-lambda');
       const data = await lambdaApi.enhanceResume({
-        resumeContent: formattedData,
-        sectionType,
-        jobDescription,
-        targetRole
+          resumeContent: formattedData,
+          sectionType,
+          jobDescription,
+          targetRole
       });
 
       console.log(`Received enhanced ${sectionType} data:`, data);
