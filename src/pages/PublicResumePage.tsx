@@ -255,25 +255,25 @@ const PublicResumePage = () => {
         return;
       }
       
-      // If user is already logged in, directly create the resume using Supabase Edge Function
+      // If user is already logged in, directly create the resume using AWS Lambda
       const { data: userData } = await supabase.auth.getUser();
       const token = userData?.user?.id ? 
                  (await supabase.auth.getSession()).data.session?.access_token : '';
       
-      const { data, error } = await supabase.functions.invoke('create-resume', {
-        body: {
-          title: resumeContent.contactInfo.name ? `${resumeContent.contactInfo.name}'s Resume` : 'My Resume',
-          content: resumeContent,
-          originalText,
-          jobDescription,
-          selectedTemplate,
-          atsScore: atsAnalysis?.score // Explicitly pass the ATS score
-        },
-        headers: token ? { Authorization: `Bearer ${token}` } : undefined
-      });
+      // Use AWS Lambda function for creating resume
+      const { lambdaApi } = await import('@/config/aws-lambda');
       
-      if (error) {
-        throw new Error(error.message || 'Failed to save resume');
+      const data = await lambdaApi.createResume({
+        title: resumeContent.contactInfo.name ? `${resumeContent.contactInfo.name}'s Resume` : 'My Resume',
+        content: resumeContent,
+        originalText,
+        jobDescription,
+        selectedTemplate,
+        atsScore: atsAnalysis?.score // Explicitly pass the ATS score
+      }, token || undefined);
+      
+      if (!data) {
+        throw new Error('Failed to save resume');
       }
       
       // Redirect to the resume editor page with the new resume ID

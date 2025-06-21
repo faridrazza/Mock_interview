@@ -22,5 +22,5 @@ parameter_overrides = [
     "AdobeClientId=ddb26bb533714329b40d7eeeab357bfa",
     "AdobeClientSecret=p8e-6g17Rfxv82brvDZ21WdiR_HVqxw1OSe5",
     "SupabaseUrl=https://lfpmxqcqygujcftysbtu.supabase.co",
-    "SupabaseServiceRoleKey=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxmcG14cWNxeWd1amNmdHlzYnR1Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTczMjk4MjA3NiwiZXhwIjoyMDQ4NTU4MDc2fQ.fZTXgbILLJHdIEm4kKJO4iWqVqxNKcmMGfZWnwDOEQg"
+    "SupabaseServiceRoleKey=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxmcG14cWNxeWd1amNmdHlzYnR1Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc0MTAzMjYwOSwiZXhwIjoyMDU2NjA4NjA5fQ.Akgg0gXsIpGwwza5i1xKZwmAWHn6mx-GlssUlML1PE0"
 ] 

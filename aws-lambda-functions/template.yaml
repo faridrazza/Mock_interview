@@ -40,6 +40,15 @@ Parameters:
     NoEcho: true
     Description: Adobe PDF Services Client Secret
   
+  SupabaseUrl:
+    Type: String
+    Description: Supabase project URL for database operations
+  
+  SupabaseServiceRoleKey:
+    Type: String
+    NoEcho: true
+    Description: Supabase service role key for database operations
+  
   
 
 Resources:
@@ -250,6 +259,32 @@ Resources:
             Method: post
             RestApiId: !Ref MockInterviewAPI
 
+  # Create Resume Function
+  CreateResumeFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src/create-resume/
+      Handler: index.handler
+      Description: Create resume records for authenticated and anonymous users - migrated from Supabase Edge Function
+      Timeout: 30
+      Environment:
+        Variables:
+          SUPABASE_URL: !Ref SupabaseUrl
+          SUPABASE_SERVICE_ROLE_KEY: !Ref SupabaseServiceRoleKey
+      Events:
+        CreateResume:
+          Type: Api
+          Properties:
+            Path: /create-resume
+            Method: post
+            RestApiId: !Ref MockInterviewAPI
+        CreateResumeOptions:
+          Type: Api
+          Properties:
+            Path: /create-resume
+            Method: options
+            RestApiId: !Ref MockInterviewAPI
+
 
 
 
@@ -354,4 +389,10 @@ Outputs:
     Description: "ATS Analysis Lambda Function ARN"
     Value: !GetAtt ATSAnalysisFunction.Arn
     Export:
-      Name: !Sub "${AWS::StackName}-ATSAnalysisFunctionArn" 
+      Name: !Sub "${AWS::StackName}-ATSAnalysisFunctionArn"
+
+  CreateResumeFunction:
+    Description: "Create Resume Lambda Function ARN"
+    Value: !GetAtt CreateResumeFunction.Arn
+    Export:
+      Name: !Sub "${AWS::StackName}-CreateResumeFunctionArn" 

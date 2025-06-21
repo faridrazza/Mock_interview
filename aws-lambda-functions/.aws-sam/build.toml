@@ -90,4 +90,13 @@ manifest_hash = "e4872a7b9ed58b97a2313025c970a3b3"
 packagetype = "Zip"
 functions = ["ATSAnalysisFunction"]
 
+[function_build_definitions.91ebbb24-7487-4760-ad67-8721feb77fa8]
+codeuri = "C:\\Users\\moham\\avatar-interview-boost\\aws-lambda-functions\\src\\create-resume"
+runtime = "nodejs18.x"
+architecture = "x86_64"
+handler = "index.handler"
+manifest_hash = "95e4842ed0b9034745f9cb608ccf9621"
+packagetype = "Zip"
+functions = ["CreateResumeFunction"]
+
 [layer_build_definitions]

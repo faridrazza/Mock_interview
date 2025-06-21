@@ -68,23 +68,22 @@ const Auth = () => {
             throw new Error('Unable to get authentication token');
           }
           
-          // Use Supabase Edge Function instead of REST API, and include the ATS score explicitly
-          const { data, error } = await supabase.functions.invoke('create-resume', {
-            body: {
-              title: resumeData.content.contactInfo.name 
-                ? `${resumeData.content.contactInfo.name}'s Resume` 
-                : 'My Resume',
-              content: resumeData.content,
-              originalText: resumeData.originalText,
-              jobDescription: resumeData.jobDescription,
-              selectedTemplate: resumeData.selectedTemplate || 'standard',
-              atsScore: resumeData.atsScore // Explicitly include the ATS score
-            },
-            headers: { Authorization: `Bearer ${accessToken}` }
-          });
+          // Use AWS Lambda function instead of Supabase Edge Function, and include the ATS score explicitly
+          const { lambdaApi } = await import('@/config/aws-lambda');
           
-          if (error) {
-            throw new Error(error.message || 'Failed to create resume from pending data');
+          const data = await lambdaApi.createResume({
+            title: resumeData.content.contactInfo.name 
+              ? `${resumeData.content.contactInfo.name}'s Resume` 
+              : 'My Resume',
+            content: resumeData.content,
+            originalText: resumeData.originalText,
+            jobDescription: resumeData.jobDescription,
+            selectedTemplate: resumeData.selectedTemplate || 'standard',
+            atsScore: resumeData.atsScore // Explicitly include the ATS score
+          }, accessToken);
+          
+          if (!data) {
+            throw new Error('Failed to create resume from pending data');
           }
           
           // Clear the pending data

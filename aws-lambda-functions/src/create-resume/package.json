@@ -1,0 +1,17 @@
+{
+  "name": "create-resume",
+  "version": "1.0.0",
+  "description": "AWS Lambda function to create resume records - migrated from Supabase Edge Function",
+  "main": "index.js",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.7.1"
+  },
+  "keywords": [
+    "aws-lambda",
+    "resume",
+    "supabase",
+    "create-resume"
+  ],
+  "author": "MockInterview4u",
+  "license": "MIT"
+} 
