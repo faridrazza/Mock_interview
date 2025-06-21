@@ -121,24 +121,30 @@ Resources:
             Method: post
             RestApiId: !Ref MockInterviewAPI
 
-  # ATS Resume Analysis Function (TODO: Implement later)
-  # ATSAnalyzerFunction:
-  #   Type: AWS::Serverless::Function
-  #   Properties:
-  #     CodeUri: src/ats-analyzer/
-  #     Handler: index.handler
-  #     Description: Automated resume analysis for ATS compatibility scoring
-  #     Timeout: 60
-  #     Environment:
-  #       Variables:
-  #         OPENAI_API_KEY: !Ref OpenAIApiKey
-  #     Events:
-  #       ATSAnalyzer:
-  #         Type: Api
-  #         Properties:
-  #           Path: /ats-analysis
-  #           Method: post
-  #           RestApiId: !Ref MockInterviewAPI
+  # ATS Resume Analysis Function
+  ATSAnalysisFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src/ats-analysis/
+      Handler: index.handler
+      Description: Automated resume analysis for ATS compatibility scoring with detailed assessment
+      Timeout: 60
+      Environment:
+        Variables:
+          OPENAI_API_KEY: !Ref OpenAIApiKey
+      Events:
+        ATSAnalysis:
+          Type: Api
+          Properties:
+            Path: /ats-analysis
+            Method: post
+            RestApiId: !Ref MockInterviewAPI
+        ATSAnalysisOptions:
+          Type: Api
+          Properties:
+            Path: /ats-analysis
+            Method: options
+            RestApiId: !Ref MockInterviewAPI
 
   # Speech Processing Function
   SpeechProcessorFunction:
@@ -344,8 +350,8 @@ Outputs:
     Export:
       Name: !Sub "${AWS::StackName}-InterviewAIFunctionArn"
 
-  # ATSAnalyzerFunction:
-  #   Description: "ATS Analyzer Lambda Function ARN"
-  #   Value: !GetAtt ATSAnalyzerFunction.Arn
-  #   Export:
-  #     Name: !Sub "${AWS::StackName}-ATSAnalyzerFunctionArn" 
+  ATSAnalysisFunction:
+    Description: "ATS Analysis Lambda Function ARN"
+    Value: !GetAtt ATSAnalysisFunction.Arn
+    Export:
+      Name: !Sub "${AWS::StackName}-ATSAnalysisFunctionArn" 

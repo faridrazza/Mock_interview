@@ -81,4 +81,13 @@ manifest_hash = "a59ae9a19524c3ac4425a61582ab2c47"
 packagetype = "Zip"
 functions = ["ParseResumeFunction"]
 
+[function_build_definitions.f5468919-cae9-47ba-8095-a666b82863ad]
+codeuri = "C:\\Users\\moham\\avatar-interview-boost\\aws-lambda-functions\\src\\ats-analysis"
+runtime = "nodejs18.x"
+architecture = "x86_64"
+handler = "index.handler"
+manifest_hash = "e4872a7b9ed58b97a2313025c970a3b3"
+packagetype = "Zip"
+functions = ["ATSAnalysisFunction"]
+
 [layer_build_definitions]

@@ -11,6 +11,7 @@ export interface LambdaConfig {
     advancedInterview: string;
     generateCompanyQuestions: string;
     enhanceResume: string;
+    atsAnalysis: string;
   };
   timeout: number;
   retryAttempts: number;
@@ -50,6 +51,7 @@ export const lambdaConfig: LambdaConfig = {
     advancedInterview: '/advanced-interview-ai',
     generateCompanyQuestions: '/generate-company-questions',
     enhanceResume: '/enhance-resume',
+    atsAnalysis: '/ats-analysis',
   },
   timeout: 60000, // 60 seconds (increased for Transcribe processing)
   retryAttempts: 2,
@@ -147,6 +149,21 @@ export class LambdaApiClient {
     missing_keywords?: string[];
   }) {
     return this.makeRequest(this.config.endpoints.enhanceResume, payload);
+  }
+
+  /**
+   * Analyze resume for ATS compatibility
+   */
+  async atsAnalysis(payload: {
+    resumeContent: any;
+    jobDescription?: string;
+    resumeId?: string;
+    forceReAnalysis?: boolean;
+    templateId?: string;
+    isPublicUpload?: boolean;
+    isAutoAnalysis?: boolean;
+  }) {
+    return this.makeRequest(this.config.endpoints.atsAnalysis, payload);
   }
 
 

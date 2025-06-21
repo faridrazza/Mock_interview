@@ -24,44 +24,47 @@ import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import ATSScoreIndicator from '@/components/resume/ATSScoreIndicator';
 import { ResumeContent, ATSAnalysis } from '@/types/resume';
-import { supabase } from '@/lib/supabase';
 import { useAuth } from '@/contexts/AuthContext';
 import PublicResumeUploader from '@/components/resume/PublicResumeUploader';
 import ResumeTemplatePreview from '@/components/resume/ResumeTemplatePreview';
 import Navbar from '@/components/layout/Navbar';
 
-// New anonymous ATS analysis function (will call Supabase Edge Function)
+// New anonymous ATS analysis function (migrated to AWS Lambda)
 const analyzeResumeATS = async (resumeContent: ResumeContent, jobDescription?: string): Promise<ATSAnalysis> => {
-  const { data, error } = await supabase.functions.invoke('ats-analysis', {
-    body: {
+  try {
+    // Use AWS Lambda function for ATS analysis
+    const { lambdaApi } = await import('@/config/aws-lambda');
+    
+    const data = await lambdaApi.atsAnalysis({
       resumeContent,
       jobDescription: jobDescription || '',
       // No resumeId for anonymous analysis
       forceReAnalysis: true, // Always analyze for public uploads
       templateId: 'raw', // Mark as raw/original content
       isPublicUpload: true // This is a public upload - baseline score
+    });
+    
+    if (!data || typeof data.score === 'undefined') {
+      throw new Error('No analysis results returned');
     }
-  });
-  
-  if (error) {
+    
+    return {
+      score: data.score,
+      feedback: data.feedback,
+      keyword_matches: data.keyword_matches || [],
+      missing_keywords: data.missing_keywords || [],
+      formatting_issues: data.formatting_issues || [],
+      improvement_suggestions: data.improvement_suggestions || [],
+      detailed_assessment: data.detailed_assessment || {},
+      keyword_match_percentage: data.keyword_match_percentage || 0,
+      content_hash: data.content_hash,
+      analyzed_at: data.analyzed_at,
+      from_cache: data.from_cache || false
+    };
+  } catch (error: any) {
+    console.error('AWS Lambda ATS analysis error:', error);
     throw new Error(error.message || 'Failed to analyze resume');
   }
-  
-  if (!data || typeof data.score === 'undefined') {
-    throw new Error('No analysis results returned');
-  }
-  
-  return {
-    score: data.score,
-    feedback: data.feedback,
-    keyword_matches: data.keyword_matches || [],
-    missing_keywords: data.missing_keywords || [],
-    formatting_issues: data.formatting_issues || [],
-    improvement_suggestions: data.improvement_suggestions || [],
-    content_hash: data.content_hash,
-    analyzed_at: data.analyzed_at,
-    from_cache: data.from_cache || false
-  };
 };
 
 // Template options for the comparison view

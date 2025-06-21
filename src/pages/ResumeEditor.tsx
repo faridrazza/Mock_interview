@@ -11,7 +11,6 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { Separator } from '@/components/ui/separator';
 import ResumeSectionEditWithAI from '@/components/resume/ResumeSectionEditWithAI';
 import ATSScoreIndicator from '@/components/resume/ATSScoreIndicator';
-import { supabase } from '@/lib/supabase';
 
 const ResumeEditor = () => {
   const { id } = useParams<{ id: string }>();
@@ -151,20 +150,17 @@ const ResumeEditor = () => {
         }
       }
       
-      const { data, error } = await supabase.functions.invoke('ats-analysis', {
-        body: {
-          resumeContent,
-          jobDescription: resume.job_description || '',
-          resumeId: id, // Pass resume ID for caching
-          forceReAnalysis, // Pass force flag
-          templateId: resume.template_id, // Pass template for template-aware analysis
-          isPublicUpload: false // This is not a public upload
-        }
-      });
+      // Use AWS Lambda function for ATS analysis
+      const { lambdaApi } = await import('@/config/aws-lambda');
       
-      if (error) {
-        throw new Error(error.message || 'Failed to analyze resume');
-      }
+      const data = await lambdaApi.atsAnalysis({
+        resumeContent,
+        jobDescription: resume.job_description || '',
+        resumeId: id, // Pass resume ID for caching
+        forceReAnalysis, // Pass force flag
+        templateId: resume.template_id, // Pass template for template-aware analysis
+        isPublicUpload: false // This is not a public upload
+      });
       
       if (!data || typeof data.score === 'undefined') {
         throw new Error('No analysis results returned');
@@ -180,6 +176,8 @@ const ResumeEditor = () => {
           missing_keywords: data.missing_keywords || [],
           formatting_issues: data.formatting_issues || [],
           improvement_suggestions: data.improvement_suggestions || [],
+          detailed_assessment: data.detailed_assessment || {},
+          keyword_match_percentage: data.keyword_match_percentage || 0,
           content_hash: data.content_hash,
           analyzed_at: data.analyzed_at,
           from_cache: data.from_cache || false
