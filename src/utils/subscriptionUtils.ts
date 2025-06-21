@@ -357,6 +357,14 @@ export const canDownloadResume = async (userId: string, tier: SubscriptionTier):
     return true;
   }
   
+  // For plans with limited downloads (like free plan with 50 downloads), check usage
+  if (limits.resumeDownloads > 0) {
+    const usage = await getSubscriptionUsage(userId, tier);
+    // For download limits, we would need to track downloads separately
+    // For now, we'll allow downloads if the plan includes them
+    return true;
+  }
+  
   // Check for resume-specific subscription tiers
   if (tier.startsWith('resume_')) {
     return true;

@@ -171,7 +171,7 @@ const SubscriptionSettings = ({ showResumePlans = false }: SubscriptionSettingsP
     name: "Bronze",
     price: "Free",
     period: "monthly",
-    features: ["One AI-Based Mock Interview", "One Advanced AI interview", "AI-Feedback & Scoring"],
+    features: ["30 Standard AI Interviews Per Month", "30 Advanced AI Interviews Per Month", "50 Resume Downloads", "AI-Feedback & Scoring"],
     isCurrent: (profile.subscription_tier === 'bronze' || profile.subscription_tier === 'free') && 
                (profile.subscription_status === 'active' || profile.subscription_status === 'trial' || !profile.subscription_status),
     category: 'interview'
@@ -181,10 +181,10 @@ const SubscriptionSettings = ({ showResumePlans = false }: SubscriptionSettingsP
     price: "9.00",
     period: "monthly",
     features: [
-      "30 Standard AI Interviews Per Month", 
-      "21 Advanced AI Interviews with Real Company Questions", 
+      "80 Standard AI Interviews Per Month", 
+      "50 Advanced AI Interviews with Real Company Questions", 
       "AI-Based Feedback & Scoring", 
-      "Create up to 15 resumes & PDF Downloads",
+      "Create up to 100 resumes & PDF Downloads",
       "ATS Resume Builder", // Added resume feature
       "Text-based AI Interviewer", 
       "Voice-based AI Interviewer for a Realistic Experience", 
@@ -206,7 +206,7 @@ const SubscriptionSettings = ({ showResumePlans = false }: SubscriptionSettingsP
       "Unlimited Standard AI Interviews Per Month", 
       "Unlimited Advanced AI Interviews with Real Company Questions", 
       "Deatailed AI-Based Feedback & Scoring ", // Added resume feature
-      "Create up to 50 resumes & PDF Downloads", 
+      "Create up to 200 resumes & PDF Downloads", 
       "ATS Resume Builder",
       "Text-based AI Interviewer", 
       "Voice-based AI Interviewer for a Realistic Experience", 
@@ -250,7 +250,7 @@ const SubscriptionSettings = ({ showResumePlans = false }: SubscriptionSettingsP
     name: "Resume Basic",
     price: "2.00",
     period: "monthly",
-    features: ["Create up to 15 resumes", "Download all your resumes as PDF", "Unlimited editing and updates", "ATS Resume Builder", "ATS templates", "AI Integrated", "Email support"],
+    features: ["Create up to 75 resumes", "Download all your resumes as PDF", "Unlimited editing and updates", "ATS Resume Builder", "ATS templates", "AI Integrated", "Email support"],
     isCurrent: profile.resume_subscription_tier === 'resume_basic',
     category: 'resume'
   }, {
@@ -258,7 +258,7 @@ const SubscriptionSettings = ({ showResumePlans = false }: SubscriptionSettingsP
     name: "Resume Premium",
     price: "6.00",
     period: "monthly",
-    features: ["Create up to 50 resumes", "Download all your resumes as PDF", "Unlimited editing and updates", "ATS Resume Builder", "ATS templates", "AI Integrated", "Email support"],
+    features: ["Create up to 150 resumes", "Download all your resumes as PDF", "Unlimited editing and updates", "ATS Resume Builder", "ATS templates", "AI Integrated", "Email support"],
     isCurrent: profile.resume_subscription_tier === 'resume_premium',
     category: 'resume'
   }];
@@ -269,12 +269,12 @@ const SubscriptionSettings = ({ showResumePlans = false }: SubscriptionSettingsP
     .map(plan => ({
       ...plan,
       features: [
-        "Create up to 15 resumes & PDF Downloads",
+        "Create up to 100 resumes & PDF Downloads",
         "Unlimited editing and updates",
         "ATS templates",
         "ATS Resume Builder",
-        "30 Standard AI Interviews Per Month",
-        "21 Advanced AI Interviews with Real Company Questions",
+        "80 Standard AI Interviews Per Month",
+        "50 Advanced AI Interviews with Real Company Questions",
         "AI-Based Feedback & Scoring",
         "Text-based AI Interviewer",
         "Voice-based AI Interviewer",
@@ -293,7 +293,7 @@ const SubscriptionSettings = ({ showResumePlans = false }: SubscriptionSettingsP
     .map(plan => ({
       ...plan,
       features: [
-        "Create up to 50 resumes & PDF Downloads",
+        "Create up to 200 resumes & PDF Downloads",
         "Unlimited editing and updates",
         "ATS templates",
         "ATS Resume Builder",

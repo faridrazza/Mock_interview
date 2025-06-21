@@ -47,24 +47,24 @@ export const SUBSCRIPTION_LIMITS: Record<SubscriptionTier, SubscriptionLimits> =
     isUnlimited: false
   },
   free: {
-    standardInterviews: 1,
-    advancedInterviews: 1,
-    resumeDownloads: 0,
-    maxResumes: 1,
+    standardInterviews: 30,
+    advancedInterviews: 30,
+    resumeDownloads: 50,
+    maxResumes: 50,
     isUnlimited: false
   },
   gold: {
-    standardInterviews: 30,
-    advancedInterviews: 21,
+    standardInterviews: 80,
+    advancedInterviews: 50,
     resumeDownloads: -1, // Enable resume downloads for Gold
-    maxResumes: 15,      // Allow 15 resumes per month for Gold
+    maxResumes: 100,     // Allow 100 resumes per month for Gold
     isUnlimited: false
   },
   diamond: {
     standardInterviews: 0,
     advancedInterviews: 0,
     resumeDownloads: -1, // Enable resume downloads for Diamond
-    maxResumes: 50,      // Allow 50 resumes per month for Diamond
+    maxResumes: 200,     // Allow 200 resumes per month for Diamond
     isUnlimited: true
   },
   megastar: {
@@ -78,14 +78,14 @@ export const SUBSCRIPTION_LIMITS: Record<SubscriptionTier, SubscriptionLimits> =
     standardInterviews: 0,
     advancedInterviews: 0,
     resumeDownloads: -1,
-    maxResumes: 15,
+    maxResumes: 75,      // Increased from 15 to 75
     isUnlimited: false
   },
   resume_premium: {
     standardInterviews: 0,
     advancedInterviews: 0,
     resumeDownloads: -1,
-    maxResumes: 50,
+    maxResumes: 150,     // Increased from 50 to 150
     isUnlimited: false
   },
   no_interviews: {
@@ -100,10 +100,10 @@ export const SUBSCRIPTION_LIMITS: Record<SubscriptionTier, SubscriptionLimits> =
 // Add a mapping of which subscription tiers include which features
 export const SUBSCRIPTION_FEATURES: Record<SubscriptionTier, SubscriptionFeatures> = {
   free: {
-    includesResume: false,
+    includesResume: true,
     includesInterviews: true,
     isInterviewUnlimited: false,
-    maxResumeCount: 1
+    maxResumeCount: 50
   },
   bronze: {
     includesResume: false,
@@ -115,13 +115,13 @@ export const SUBSCRIPTION_FEATURES: Record<SubscriptionTier, SubscriptionFeature
     includesResume: true,
     includesInterviews: true,
     isInterviewUnlimited: false,
-    maxResumeCount: 15
+    maxResumeCount: 100
   },
   diamond: {
     includesResume: true,
     includesInterviews: true,
     isInterviewUnlimited: true,
-    maxResumeCount: 50
+    maxResumeCount: 200
   },
   megastar: {
     includesResume: true,
@@ -133,13 +133,13 @@ export const SUBSCRIPTION_FEATURES: Record<SubscriptionTier, SubscriptionFeature
     includesResume: true,
     includesInterviews: false,
     isInterviewUnlimited: false,
-    maxResumeCount: 15
+    maxResumeCount: 75
   },
   resume_premium: {
     includesResume: true,
     includesInterviews: false,
     isInterviewUnlimited: false,
-    maxResumeCount: 50
+    maxResumeCount: 150
   },
   no_interviews: {
     includesResume: true,
