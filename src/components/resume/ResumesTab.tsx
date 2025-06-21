@@ -10,13 +10,14 @@ import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/components/ui/use-toast';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Resume } from '@/types/resume';
-import { getUserResumes, createResume, createBlankResume, deleteResume } from '@/lib/resume';
+import { getUserResumes, createBlankResume, deleteResume } from '@/lib/resume';
 import { useAuth } from '@/contexts/AuthContext';
 import ResumeUploader from './ResumeUploader';
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from '@/components/ui/dropdown-menu';
 import { formatDistanceToNow } from 'date-fns';
 import { getScoreColorClass } from '@/utils/resume';
 import { canCreateResume, getSubscriptionUsage, invalidateUsageCache } from '@/utils/subscriptionUtils';
+import { supabase } from '@/lib/supabase';
 
 const ResumesTab = () => {
   const navigate = useNavigate();
@@ -137,7 +138,7 @@ const ResumesTab = () => {
   };
   
   const handleCreateResume = async () => {
-    if (!user || !profile) {
+    if (!user) {
       toast({
         title: 'Authentication required',
         description: 'Please sign in to create a resume',
@@ -147,24 +148,16 @@ const ResumesTab = () => {
     }
     
     if (!newResumeTitle.trim()) {
-      toast({
-        title: 'Resume title required',
-        description: 'Please provide a title for your resume.',
-        variant: 'destructive',
-      });
+      setError('Please enter a resume title.');
       return;
     }
     
     try {
-      // Determine which tier to use for checking resume limits
-      const tierToUse = profile.resume_subscription_tier && 
-                       profile.resume_subscription_status === 'active' 
-                       ? profile.resume_subscription_tier 
-                       : profile.subscription_tier || 'free';
+      // Check if user can create more resumes based on subscription
+      const profile = await supabase.from('profiles').select('*').eq('id', user.id).single();
+      const tierToUse = profile.data?.resume_subscription_tier || profile.data?.subscription_tier || 'free';
       
-      // Check again if user can create more resumes
       const canCreate = await canCreateResume(user.id, tierToUse);
-      
       if (!canCreate) {
         setIsCreateDialogOpen(false);
         setShowSubscriptionDialog(true);
@@ -173,8 +166,45 @@ const ResumesTab = () => {
       
       setCreatingResume(true);
       setError(null);
+      
+      // Get authentication token for AWS Lambda
+      const { data: sessionData } = await supabase.auth.getSession();
+      const accessToken = sessionData?.session?.access_token;
+      
+      if (!accessToken) {
+        throw new Error('Authentication required. Please sign in again.');
+      }
+      
+      // Use AWS Lambda function for creating resume instead of direct Supabase call
+      const { lambdaApi } = await import('@/config/aws-lambda');
+      
       const blankContent = createBlankResume();
-      const resume = await createResume(newResumeTitle, blankContent, jobDescription.trim() || undefined);
+      const data = await lambdaApi.createResume({
+        title: newResumeTitle,
+        content: blankContent,
+        originalText: '', // No original text for blank resumes
+        jobDescription: jobDescription.trim() || undefined,
+        selectedTemplate: 'standard', // Default template for dashboard resumes
+        atsScore: undefined // No ATS score for blank resumes
+      }, accessToken);
+      
+      if (!data) {
+        throw new Error('Failed to create resume');
+      }
+      
+      // Convert AWS Lambda response to Resume format expected by the component
+      const resume: Resume = {
+        id: data.id,
+        title: data.title,
+        content: data.content,
+        user_id: data.user_id,
+        template_id: data.template_id || 'standard',
+        status: data.status || 'draft',
+        created_at: data.created_at,
+        updated_at: data.updated_at,
+        job_description: data.job_description,
+        ats_score: data.ats_score
+      };
       
       toast({
         title: 'Resume created',

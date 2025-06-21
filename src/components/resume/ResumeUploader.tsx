@@ -14,7 +14,6 @@ import { Loader2, Upload, FileText, X, Check } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import { useToast } from '@/components/ui/use-toast';
 import { Resume, ResumeContent } from '@/types/resume';
-import { createResume } from '@/lib/resume';
 
 interface ResumeUploaderProps {
   onUploadComplete?: (resume: Resume) => void;
@@ -165,12 +164,43 @@ const ResumeUploader: React.FC<ResumeUploaderProps> = ({
         return;
       }
       
-      // Create the resume using the parsed content
-      const resume = await createResume(
-        resumeTitle,
-        parsedResume,
-        jobDescription.trim() || undefined
-      );
+      // Get authentication token for AWS Lambda
+      const { data: sessionData } = await supabase.auth.getSession();
+      const accessToken = sessionData?.session?.access_token;
+      
+      if (!accessToken) {
+        throw new Error('Authentication required. Please sign in again.');
+      }
+      
+      // Use AWS Lambda function for creating resume instead of direct Supabase call
+      const { lambdaApi } = await import('@/config/aws-lambda');
+      
+      const data = await lambdaApi.createResume({
+        title: resumeTitle,
+        content: parsedResume,
+        originalText: '', // ResumeUploader doesn't track original text
+        jobDescription: jobDescription.trim() || undefined,
+        selectedTemplate: 'standard', // Default template for dashboard uploads
+        atsScore: undefined // No ATS score for dashboard uploads
+      }, accessToken);
+      
+      if (!data) {
+        throw new Error('Failed to create resume');
+      }
+      
+      // Convert AWS Lambda response to Resume format expected by the component
+      const resume: Resume = {
+        id: data.id,
+        title: data.title,
+        content: data.content,
+        user_id: data.user_id,
+        template_id: data.template_id || 'standard',
+        status: data.status || 'draft',
+        created_at: data.created_at,
+        updated_at: data.updated_at,
+        job_description: data.job_description,
+        ats_score: data.ats_score
+      };
       
       toast({
         title: 'Resume created',

@@ -9,8 +9,8 @@ import { Textarea } from '@/components/ui/textarea';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import ResumeUploader from '@/components/resume/ResumeUploader';
-import { createResume } from '@/lib/resume';
 import { Resume, ResumeContent } from '@/types/resume';
+import { supabase } from '@/lib/supabase';
 
 const ResumeBuilderUpload = () => {
   const [isCreating, setIsCreating] = useState(false);
@@ -52,11 +52,29 @@ const ResumeBuilderUpload = () => {
     try {
       setIsCreating(true);
       
-      const createdResume = await createResume(
-        resumeTitle,
-        parsedContent,
-        jobDescription // Now using the job description from the form
-      );
+      // Get authentication token for AWS Lambda
+      const { data: sessionData } = await supabase.auth.getSession();
+      const accessToken = sessionData?.session?.access_token;
+      
+      if (!accessToken) {
+        throw new Error('Authentication required. Please sign in again.');
+      }
+      
+      // Use AWS Lambda function for creating resume instead of direct Supabase call
+      const { lambdaApi } = await import('@/config/aws-lambda');
+      
+      const data = await lambdaApi.createResume({
+        title: resumeTitle,
+        content: parsedContent,
+        originalText: originalText, // Use the original text from the parsed content
+        jobDescription: jobDescription.trim() || undefined,
+        selectedTemplate: 'standard', // Default template for dashboard uploads
+        atsScore: undefined // No ATS score for dashboard uploads
+      }, accessToken);
+      
+      if (!data) {
+        throw new Error('Failed to create resume');
+      }
       
       toast({
         title: "Resume created",
@@ -64,7 +82,7 @@ const ResumeBuilderUpload = () => {
       });
       
       // Navigate to the resume editor
-      navigate(`/dashboard/resume-editor/${createdResume.id}`);
+      navigate(`/dashboard/resume-editor/${data.id}`);
     } catch (error: any) {
       console.error('Error creating resume:', error);
       toast({
