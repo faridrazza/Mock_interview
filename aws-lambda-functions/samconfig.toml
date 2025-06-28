@@ -18,9 +18,9 @@ confirm_changeset = false
 resolve_s3 = true
 parameter_overrides = [
     "CorsOrigins=http://localhost:5173,http://localhost:3000,http://localhost:8080,http://localhost:8081",
-    "OpenAIApiKey=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",
-    "AdobeClientId=ddb26bb533714329b40d7eeeab357bfa",
-    "AdobeClientSecret=p8e-6g17Rfxv82brvDZ21WdiR_HVqxw1OSe5",
-    "SupabaseUrl=https://lfpmxqcqygujcftysbtu.supabase.co",
-    "SupabaseServiceRoleKey=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxmcG14cWNxeWd1amNmdHlzYnR1Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc0MTAzMjYwOSwiZXhwIjoyMDU2NjA4NjA5fQ.Akgg0gXsIpGwwza5i1xKZwmAWHn6mx-GlssUlML1PE0"
+    "OpenAIApiKey=${OPENAI_API_KEY}",
+    "AdobeClientId=${ADOBE_CLIENT_ID}",
+    "AdobeClientSecret=${ADOBE_CLIENT_SECRET}",
+    "SupabaseUrl=${SUPABASE_URL}",
+    "SupabaseServiceRoleKey=${SUPABASE_SERVICE_ROLE_KEY}"
 ] 
