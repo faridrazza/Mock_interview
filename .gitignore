@@ -26,3 +26,21 @@ build
 .env
 .env.local
 samconfig.toml
+
+# Additional security for AWS Lambda Hackathon deployment
+.env.production
+.env.staging
+parameters.json
+aws-credentials.json
+*.pem
+*.key
+.aws/
+temp-credentials.txt
+
+# AWS SAM build artifacts
+.aws-sam/
+samconfig.toml*
+
+# Backup files
+*.backup
+*.bak

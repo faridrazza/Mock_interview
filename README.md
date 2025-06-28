@@ -570,23 +570,27 @@ In the Dashboard > Resume section, users can click on the "Create Resume" button
 
 ## **Deployment & Testing**
 
-**Clone and navigate to project**
+## **Clone and navigate to project**
+
 git clone [repo-url]
 cd avatar-interview-boost
 
-# **Install frontend dependencies**
+## **Install frontend dependencies**
+
 npm install
 
-# **Navigate to Lambda functions and install their dependencies**
+## **Navigate to Lambda functions and install their dependencies**
+
 cd aws-lambda-functions
 npm run build
 
-# **Build and deploy Lambda functions**
+## **Build and deploy Lambda functions**
+
 sam build
 sam deploy --guided
 
-# **Run and Test**
-npm run dev
+## **Run and Test**
+ npm run dev
 ---
 
 

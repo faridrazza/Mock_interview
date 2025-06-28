@@ -1,0 +1,9 @@
+{
+  "Parameters": {
+    "OpenAIApiKey": "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",
+    "AdobeClientId": "ddb26bb533714329b40d7eeeab357bfa",
+    "AdobeClientSecret": "p8e-6g17Rfxv82brvDZ21WdiR_HVqxw1OSe5",
+    "SupabaseUrl": "https://lfpmxqcqygujcftysbtu.supabase.co",
+    "SupabaseServiceRoleKey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxmcG14cWNxeWd1amNmdHlzYnR1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDEwMzI2MDksImV4cCI6MjA1NjYwODYwOX0.mtrnDIMa7yjyxPaGGJaSIJlm4gY1ur1o-dVMmR5yzfU"
+  }
+} 
