@@ -578,10 +578,13 @@ In the Dashboard > Resume section, users can click on the "Create Resume" button
 ## **Deployment & Testing**
 
 ## **Clone and navigate to project**
+
 **git clone [repo-url]**
+
 **cd avatar-interview-boost**
 
 ## **Install frontend dependencies**
+
 **npm install**
 
 ## **Setup samconfig.toml**
@@ -599,11 +602,13 @@ In the Dashboard > Resume section, users can click on the "Create Resume" button
 ## **Navigate to Lambda functions and install their dependencies**
 
 **cd aws-lambda-functions**
+
 **npm run build**
 
 ## **Build and deploy Lambda functions**
 
 **sam build**
+
 **sam deploy**
 
 ## **Run and Test**
