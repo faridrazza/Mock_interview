@@ -576,14 +576,14 @@ In the Dashboard > Resume section, users can click on the "Create Resume" button
 ## **Deployment & Testing**
 
 ## **Clone and navigate to project**
--**git clone [repo-url]**
--**cd avatar-interview-boost**
+**git clone [repo-url]**
+**cd avatar-interview-boost**
 
 ## **Install frontend dependencies**
--**npm install**
+**npm install**
 
 ## **Setup samconfig.toml**
--**parameter_overrides** = [
+**parameter_overrides** = [
     "CorsOrigins=http://localhost:5173,http://localhost:3000,http://localhost:8080",
 
    "OpenAIApiKey=${OPENAI_API_KEY}",
@@ -596,15 +596,13 @@ In the Dashboard > Resume section, users can click on the "Create Resume" button
 
 ## **Navigate to Lambda functions and install their dependencies**
 
--**cd aws-lambda-functions**
-
--**npm run build**
+**cd aws-lambda-functions**
+**npm run build**
 
 ## **Build and deploy Lambda functions**
 
--**sam build**
-
--**sam deploy**
+**sam build**
+**sam deploy**
 
 ## **Run and Test**
 
