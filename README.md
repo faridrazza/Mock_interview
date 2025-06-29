@@ -576,17 +576,14 @@ In the Dashboard > Resume section, users can click on the "Create Resume" button
 ## **Deployment & Testing**
 
 ## **Clone and navigate to project**
-
-git clone [repo-url]
-cd avatar-interview-boost
+-**git clone [repo-url]**
+-**cd avatar-interview-boost**
 
 ## **Install frontend dependencies**
-
-npm install
+-**npm install**
 
 ## **Setup samconfig.toml**
-
-parameter_overrides = [
+-**parameter_overrides** = [
     "CorsOrigins=http://localhost:5173,http://localhost:3000,http://localhost:8080",
 
    "OpenAIApiKey=${OPENAI_API_KEY}",
@@ -599,26 +596,19 @@ parameter_overrides = [
 
 ## **Navigate to Lambda functions and install their dependencies**
 
-cd aws-lambda-functions
-npm run build
+-**cd aws-lambda-functions**
+
+-**npm run build**
 
 ## **Build and deploy Lambda functions**
 
-sam build
-sam deploy 
+-**sam build**
+
+-**sam deploy**
 
 ## **Run and Test**
- npm run dev
----
 
-
-## **Demo Video Highlights**
-
-1. **Real-time interview question generation** with experience-level adaptation
-2. **Live voice synthesis** using Amazon Polly with 3D avatar animation
-3. **Comprehensive feedback analysis** with detailed scoring metrics
-4. **AWS Lambda monitoring** showing real-time performance metrics
-5. **Cost analysis** demonstrating serverless efficiency
+-**npm run dev**
 
 ---
 
