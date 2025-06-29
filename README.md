@@ -22,7 +22,9 @@
 - **Amazon Polly** - Neural text-to-speech with lip-sync data generation
 - **S3** - File storage 
 - **CloudFormation/SAM** - Infrastructure as Code deployment
-- **Cloudwatch** 
+- **Cloudwatch**
+- **Amplify**  - For Frontend Hosting
+
 
 ### **AI & External Services:**
 - **OpenAI GPT-4** - AI Integration in the application
