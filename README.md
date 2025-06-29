@@ -584,6 +584,19 @@ cd avatar-interview-boost
 
 npm install
 
+## **Setup samconfig.toml**
+
+parameter_overrides = [
+    "CorsOrigins=http://localhost:5173,http://localhost:3000,http://localhost:8080",
+
+   "OpenAIApiKey=${OPENAI_API_KEY}",
+    "AdobeClientId=${ADOBE_CLIENT_ID}",
+    "AdobeClientSecret=${ADOBE_CLIENT_SECRET}",
+    "SupabaseUrl=${SUPABASE_URL}",
+    "SupabaseServiceRoleKey=${SUPABASE_SERVICE_ROLE_KEY}"
+] 
+
+
 ## **Navigate to Lambda functions and install their dependencies**
 
 cd aws-lambda-functions
@@ -592,7 +605,7 @@ npm run build
 ## **Build and deploy Lambda functions**
 
 sam build
-sam deploy --guided
+sam deploy 
 
 ## **Run and Test**
  npm run dev
