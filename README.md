@@ -6,6 +6,11 @@
 
 **MockInterview4u** is an AI-driven platform designed to help job seekers confidently prepare for interviews and build standout resumes. It offers mock interview simulations with AI feedback, and a ATS-friendly resume builder that lets users upload or create resumes from scratch, enhance content with AI, and export professional templates with ease.
 
+🌐 Live Application: https://dev.d1k9j74c9fglqj.amplifyapp.com
+📂 GitHub Repository: https://github.com/faridrazza/Mock_interview
+🌐 You can use this existing Email id and password to Login : Email - speakjar@gmail.com and Password - Hello@5858
+🌐 You can also create new account to test application
+
 ---
 
 ## **Tech Stack**
@@ -71,7 +76,7 @@
 ---
 
 
-## **What Makes This Special**
+## **Solving Real Problem**
 
 MockInterview4U isn't just another career tool — it's built to solve real problems faced by job seekers:
 
@@ -558,10 +563,8 @@ In the Dashboard > Resume section, users can click on the "Create Resume" button
 
 
 
-## **Business Impact & Metrics**
-
-### **Problem Solved:**
-- **Interview Anxiety**: AI-powered practice reduces candidate stress
+### ** Trying to Solve Problem:**
+- **Interview Anxiety**: AI-powered practice to build confidence and redunce anxiety
 - **Skill Assessment**: Objective feedback helps identify improvement areas  
 - **Cost-Effective Preparation**: Accessible alternative to expensive coaching
 - **ATS Resume Analysis and building**: AI analysis and resume building 
