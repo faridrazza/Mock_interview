@@ -28,7 +28,7 @@
 
 ### **AI & External Services:**
 - **OpenAI GPT-4** - AI Integration in the application
-- **OpenAI Whisper** - Speech-to-text transcription (I used Aws speech to text but my free tired expired so i switched to whisper)
+- **OpenAI Whisper** - Speech-to-text transcription
 - **Adobe PDF Services** - Enterprise-grade PDF text extraction
 - **Supabase PostgreSQL** - Primary database
 
