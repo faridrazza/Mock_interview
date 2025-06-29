@@ -77,9 +77,9 @@
 ---
 
 
-## **Solving Real Problem**
+## ** Build To Solve A Real Problem**
 
-MockInterview4U isn't just another career tool — it's built to solve real problems faced by job seekers:
+MockInterview4U is  built to solve real problems faced by job seekers:
 
 Mock Interview Practice: Simulates real interview scenarios with both standard and advanced AI, helping users reduce anxiety and improve performance.
 
