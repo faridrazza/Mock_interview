@@ -19,7 +19,7 @@
 ### **AWS Cloud Infrastructure:**
 - **AWS Lambda** - 11 serverless functions 
 - **API Gateway** - RESTful API endpoints with CORS configuration
-- **Amazon Polly** - Neural text-to-speech with lip-sync data generation
+- **Amazon Polly** - Neural text-to-speech
 - **S3** - File storage 
 - **CloudFormation/SAM** - Infrastructure as Code deployment
 - **Cloudwatch**
