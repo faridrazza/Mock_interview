@@ -613,7 +613,7 @@ In the Dashboard > Resume section, users can click on the "Create Resume" button
 
 ## **Run and Test**
 
--**npm run dev**
+**npm run dev**
 
 ---
 
