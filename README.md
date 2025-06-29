@@ -22,7 +22,7 @@
 - **Amazon Polly** - Neural text-to-speech
 - **S3** - File storage 
 - **CloudFormation/SAM** - Infrastructure as Code deployment
-- **Cloudwatch**
+- **Cloudwatch** - For monitoring
 - **Amplify**  - For Frontend Hosting
 
 
