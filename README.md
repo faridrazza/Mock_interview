@@ -4,7 +4,7 @@
 
 ## **Project Overview**
 
-**MockInterview4u** is an AI-driven platform designed to help job seekers confidently prepare for interviews and build standout resumes. It offers mock interview simulations with AI feedback, and a ATS-friendly resume builder that lets users upload or create resumes from scratch, enhance content with AI, and export professional templates with ease.
+**MockInterview4u** is a comprehensive AI-powered interview preparation platform that combines cutting-edge technology with real-world interview simulation to help job seekers practice mock interview and build resume. This platform leverages the power of AWS serverless architecture to deliver a scalable, intelligent, and user-friendly interview practice experience. Apart from the interview feature, the application also offers a resume builder to help users craft professional, job-ready resumes.
 
 🌐 Live Application: https://dev.d1k9j74c9fglqj.amplifyapp.com
 
